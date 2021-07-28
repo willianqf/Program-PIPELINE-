@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>PipeLineInicial</class>
  <widget class="QMainWindow" name="PipeLineInicial">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -46,9 +49,12 @@ border-right-color: rgb(126, 126, 126);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="Connect">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>220</x>
       <y>270</y>
       <width>110</width>
       <height>40</height>
@@ -74,7 +80,7 @@ border-right-color: rgb(126, 126, 126);</string>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(188, 188, 188);</string>
+     <string notr="true">background-color: rgb(143, 255, 251);</string>
     </property>
     <property name="text">
      <string>Connectar</string>

@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
-    <height>350</height>
+    <width>395</width>
+    <height>225</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>525</width>
-    <height>350</height>
+    <width>395</width>
+    <height>225</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>525</width>
-    <height>350</height>
+    <width>395</width>
+    <height>225</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -49,9 +49,9 @@ selection-background-color: rgb(158, 255, 131);
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>20</y>
-      <width>151</width>
-      <height>121</height>
+      <y>30</y>
+      <width>171</width>
+      <height>141</height>
      </rect>
     </property>
     <property name="text">
@@ -67,10 +67,10 @@ selection-background-color: rgb(158, 255, 131);
    <widget class="QPushButton" name="AbrirProcesso">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>250</y>
+      <x>220</x>
+      <y>40</y>
       <width>131</width>
-      <height>51</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -86,7 +86,81 @@ selection-background-color: rgb(158, 255, 131);
 color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
-     <string>Abrir Processos</string>
+     <string>Calcular Processos</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ConectarSQL">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>90</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(17, 199, 255);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Connectar SQL</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="CarregarPIPE">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>140</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(17, 199, 255);
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Carregar .PIPE</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>0</y>
+      <width>191</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Permanent Marker</family>
+      <pointsize>19</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 172, 6);</string>
+    </property>
+    <property name="text">
+     <string>PIPE Creator</string>
     </property>
    </widget>
   </widget>
@@ -95,26 +169,17 @@ color: rgb(255, 255, 255);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>525</width>
+     <width>395</width>
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuCarregar_SQL">
-    <property name="title">
-     <string>Ferramentas</string>
-    </property>
-    <addaction name="actionConnectar_SQL"/>
-    <addaction name="actionCarregar_PIPE"/>
-    <addaction name="actionSair"/>
-   </widget>
    <widget class="QMenu" name="menuInfo">
     <property name="title">
      <string>Info</string>
     </property>
-    <addaction name="actionInforma_es_do_Desenvolvedor"/>
-    <addaction name="actionCr_ditos"/>
+    <addaction name="infodev"/>
+    <addaction name="cred"/>
    </widget>
-   <addaction name="menuCarregar_SQL"/>
    <addaction name="menuInfo"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -138,12 +203,12 @@ color: rgb(255, 255, 255);</string>
     <string>Sair</string>
    </property>
   </action>
-  <action name="actionInforma_es_do_Desenvolvedor">
+  <action name="infodev">
    <property name="text">
     <string>Informações do Desenvolvedor</string>
    </property>
   </action>
-  <action name="actionCr_ditos">
+  <action name="cred">
    <property name="text">
     <string>Créditos</string>
    </property>

@@ -2,6 +2,11 @@ import random
 from PyQt5 import uic, QtWidgets, QtCore
 from PyQt5.QtWidgets import QMessageBox
 import devs 
+import pyodbc
+
+ConnectServer: bool = False
+NomeServer: str
+NomeBanco: str
 
 # int(Forms2.TempoExecucao_1.text()), int(Forms2.OrdemChegada_1.text()), int(Forms2.Prioridade_1.text())
 ####################################### 2 PROCESSOS ##############################################
@@ -288,7 +293,6 @@ def carregarprocessos():
         Processos6.show()
 
 def abrirprocessos(valor):
-    print('abrindo com entrada')
     if valor == 2:
         Processos2.show()
     elif valor == 3:
@@ -299,14 +303,91 @@ def abrirprocessos(valor):
         Processos5.show()
     elif valor == 6:
         Processos6.show()
+############################## CONNECTAR SQL ########################################################
+
+def conexaobanco(nomeserver: str, nomebanco: str):
+    #conexao = 'Driver={SQL Server Native Client 11.0};Server='+server+';Database='+database+';UID='+username+';PWD='+ password
+    conexao = "Driver={SQL Server Native Client 11.0};Server="+nomeserver+";Database="+nomebanco+";Trusted_Connection=yes;"
+    return pyodbc.connect(conexao)
+
+def buttonverif():
+    if len(SQLlogin.SQLname.text()) > 8 and SQLlogin.SelectAut.currentText() == 'SQL Windows':
+        SQLlogin.Connect.setEnabled(True)
+    else:
+        if len(SQLlogin.SQLLogin_Name.text()) > 6 and len(SQLlogin.SQLLogin_Senha.text()) > 6:
+            SQLlogin.Connect.setEnabled(True)
+        else:
+            SQLlogin.Connect.setEnabled(False)
+
+def sqlserver():
+    if SQLlogin.SelectAut.currentText() == 'SQL Server':
+        SQLlogin.label_name.setEnabled(True)
+        SQLlogin.label_senha.setEnabled(True)
+        SQLlogin.SQLLogin_Name.setEnabled(True)
+        SQLlogin.SQLLogin_Senha.setEnabled(True)
+    else:
+        SQLlogin.label_name.setEnabled(False)
+        SQLlogin.label_senha.setEnabled(False)
+        SQLlogin.SQLLogin_Name.setEnabled(False)
+        SQLlogin.SQLLogin_Senha.setEnabled(False)
+        SQLlogin.SQLLogin_Name.setText("")
+        SQLlogin.SQLLogin_Senha.setText("")
+
+def ConnectarServidor():
+    if SQLlogin.SelectAut.currentText() == 'SQL Windows':
+        try:
+            global NomeServer
+            global NomeBanco
+            global ConnectServer
+            con = conexaobanco(SQLlogin.SQLname.text(), 'PIPESQL')
+            cursor = con.cursor()
+            cursor.close()
+            con.close()
+            NomeServer = SQLlogin.SQLname.text()
+            NomeBanco = 'PIPESQL'
+            ConnectServer = True
+            QMessageBox.about(SQLlogin, "Conexão Realidade", "O banco está connectado e pronto para ser usado!")
+            SQLlogin.close()
+        except pyodbc.InterfaceError:
+            QMessageBox.about(SQLlogin, "Erro de Conexão", "O banco não existe ou o servidor está incorreto!")
+        except Exception:
+            QMessageBox.about(SQLlogin, "Erro de Conexão", "O banco demorou a responder. Verifique se não existe dados errados")
+    else:
+        print('Enviar senha e nome também')
+    
+def devinfo():
+    QMessageBox.about(Main, "Creditos", "Programa desenvolvido em 20/07/2021\nDeveloper: Willian Quirino / Dev Back-End\n\nPrograma desenvolvido para fins acadêmicos que visa o calculo de tabelas escalonadas para projetos de sistemas operações.\nO programa tem como apriomoramento de criação de tabelas FIFO/SJT/Por Prioridade utilizando processos de escalas.\n\n\nContatos: https://github.com/willianqf/Program-PIPELINE-")
+def devinfo2():
+    QMessageBox.about(Main, "Informações do Programa", "Este programa tem fins de calculo de escalonamento para processos operacionais.\n\nCalculos disponíiveis: FIFO/SJF/Por Prioridade\n\nComo usar o programa?\nDeve-se utilizar a quantidade de processos que queira calcular no botão 'Calcular Processos'\n\nComo gero relatório?\nO programa oferece um local que pode ser alterado no momento do save de relatório\n\nO programa é de código aberto?\nO programa pode ser acessado com seu código fonte através do canal do GIT disponível nos créditos")
+
 ####################################  MAIN  #########################################################
 def abrirselect():
     SelectProcess.show()
+
+def abrirsql():
+    global ConnectServer
+    if ConnectServer == False:
+        SQLlogin.show()
+    else:
+        QMessageBox.about(Main, "Conexão já realizada", "Você já está conectado com o banco")
+
+def CarregarPIPE():
+    global ConnectServer
+    if ConnectServer == True:
+        print('Carregar PIPE')
+    else:
+        QMessageBox.about(Main, "Conexão não realizada", "Você precisa estar com o banco conectado para realizar consultas!")
 
 #####################################################################################################
 if __name__ == '__main__':
     Aplicativo = QtWidgets.QApplication([]) #Usar via .ui
     SQLlogin = uic.loadUi("SQL-Login.ui") #Selecionar arquivo .ui
+    SQLlogin.SQLname.textChanged.connect(buttonverif)
+    SQLlogin.SelectAut.activated.connect(buttonverif)
+    SQLlogin.SelectAut.activated.connect(sqlserver)
+    SQLlogin.SQLLogin_Senha.textChanged.connect(buttonverif)
+    SQLlogin.SQLLogin_Name.textChanged.connect(buttonverif)
+    SQLlogin.Connect.clicked.connect(ConnectarServidor)
     #################### 2 PROCESSOS ##########################################
     Processos2 = uic.loadUi("Processos2.ui")
     Processos2.GerarTabela.clicked.connect(GerarTabela2)
@@ -338,5 +419,10 @@ if __name__ == '__main__':
     ####################    Main    ###########################################
     Main = uic.loadUi("Main.ui")
     Main.AbrirProcesso.clicked.connect(abrirselect)
+    Main.ConectarSQL.clicked.connect(abrirsql)
+    Main.CarregarPIPE.clicked.connect(CarregarPIPE)
+    Main.cred.triggered.connect(devinfo)
+    Main.infodev.triggered.connect(devinfo2)
     Main.show()
     Aplicativo.exec() #Executar programa
+    # WILLIANQUIRINO\SQLEXPRESS

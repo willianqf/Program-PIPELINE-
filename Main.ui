@@ -33,7 +33,7 @@
    <string notr="true">background-color: rgb(242, 254, 255);
 selection-color: rgb(0, 0, 0);
 selection-background-color: rgb(158, 255, 131);
-</string>
+border-top-color: rgb(35, 255, 182);</string>
   </property>
   <property name="iconSize">
    <size>
@@ -142,9 +142,9 @@ color: rgb(255, 255, 255);</string>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>190</x>
       <y>0</y>
-      <width>191</width>
+      <width>201</width>
       <height>31</height>
      </rect>
     </property>
@@ -160,7 +160,7 @@ color: rgb(255, 255, 255);</string>
      <string notr="true">color: rgb(255, 172, 6);</string>
     </property>
     <property name="text">
-     <string>PIPE Creator</string>
+     <string>PIPE CREATOR</string>
     </property>
    </widget>
   </widget>

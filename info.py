@@ -411,7 +411,7 @@ def GerarNum7():
     Processos7.OrdemChegada_6.setText('6')
     Processos7.Prioridade_6.setText(str(random.randrange(1, 256)))
     Processos7.TempoExecucao_7.setText(str(random.randrange(1, 101)))
-    Processos7.OrdemChegada_7.setText('6')
+    Processos7.OrdemChegada_7.setText('7')
     Processos7.Prioridade_7.setText(str(random.randrange(1, 256)))
 
 def LimparCampos7():
@@ -528,7 +528,7 @@ def ConnectarServidor():
 def devinfo():
     QMessageBox.about(Main, "Creditos", "Programa desenvolvido em 20/07/2021\nDeveloper: Willian Quirino / Dev Back-End\n\nPrograma desenvolvido para fins acadêmicos que visa o calculo de tabelas escalonadas para projetos de sistemas operações.\nO programa tem como apriomoramento de criação de tabelas FIFO/SJT/Por Prioridade utilizando processos de escalas.\n\n\nContatos: https://github.com/willianqf/Program-PIPELINE-")
 def devinfo2():
-    QMessageBox.about(Main, "Informações do Programa", "Este programa tem fins de calculo de escalonamento para processos operacionais.\n\nCalculos disponíiveis: FIFO/SJF/Por Prioridade\n\nComo usar o programa?\nDeve-se utilizar a quantidade de processos que queira calcular no botão 'Calcular Processos'\n\nComo gero relatório?\nO programa oferece um local que pode ser alterado no momento do save de relatório\n\nO programa é de código aberto?\nO programa pode ser acessado com seu código fonte através do canal do GIT disponível nos créditos")
+    QMessageBox.about(Main, "Informações do Programa", "Este programa tem fins de calculo de escalonamento para processos operacionais.\n\nCalculos disponíiveis: FIFO/SJF/Por Prioridade\n\nComo usar o programa?\nDeve-se utilizar a quantidade de processos que queira calcular no botão 'Calcular Processos'\n\nComo gero relatório?\nO programa oferece um local que pode ser alterado no momento do save de relatório. O relatório é gerado em PDF contendo a tabela de processo junto ao gráfico de Gantt\n\nO programa é de código aberto?\nO programa pode ser acessado com seu código fonte através do canal do GIT disponível nos créditos")
 
 ####################################  MAIN  #########################################################
 def abrirselect():

@@ -1,4 +1,5 @@
 import matplotlib.pyplot as ps
+import io
 from docx import Document
 
 processos = [('P1', 15, 1, 4),('P2',20, 2, 3),('P3', 20, 3, 1),('P4', 45, 4, 2)]
@@ -114,3 +115,23 @@ def GerarTabela(valor): #Gera Tabela de Gantt
     ps.show()
     #ps.savefig('SalveArquivo.png') salvar arquivo
 
+def Test():    
+    fig, gnt = ps.subplots() 
+    gnt.set_ylim(0, 50) 
+    gnt.set_xlim(0, 160) 
+    gnt.set_xlabel('TEMPO (NS)') 
+    gnt.set_ylabel('PROCESSOS') 
+    gnt.set_yticks([15, 25, 35]) 
+    gnt.set_yticklabels(['P1', 'P2', 'P3']) 
+    gnt.grid(True) 
+    gnt.broken_barh([(40, 50)], (30, 9), facecolors =('tab:orange')) 
+    gnt.broken_barh([(110, 10), (150, 10)], (10, 9), 
+                         facecolors ='tab:blue') 
+    gnt.broken_barh([(10, 50), (100, 20), (130, 10)], (20, 9), 
+                                  facecolors =('tab:red')) 
+                                
+    ps.show()
+
+
+#GerarTabela(calcularFIFO(processos))
+#test()

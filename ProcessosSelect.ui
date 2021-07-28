@@ -108,6 +108,11 @@ color: rgb(0, 0, 0);</string>
       <string>6</string>
      </property>
     </item>
+    <item>
+     <property name="text">
+      <string>7</string>
+     </property>
+    </item>
    </widget>
    <widget class="QPushButton" name="LoadProcess">
     <property name="geometry">

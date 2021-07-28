@@ -357,6 +357,7 @@ border-bottom-color: rgb(255, 255, 255);</string>
     </property>
     <addaction name="SalvarSQL"/>
     <addaction name="GerarRandom"/>
+    <addaction name="LimparCampos"/>
    </widget>
    <addaction name="menuFerramentas"/>
   </widget>
@@ -374,6 +375,11 @@ border-bottom-color: rgb(255, 255, 255);</string>
   <action name="GerarRandom">
    <property name="text">
     <string>Gerar Numeros Aleatórios</string>
+   </property>
+  </action>
+  <action name="LimparCampos">
+   <property name="text">
+    <string>Limpar Campos</string>
    </property>
   </action>
  </widget>

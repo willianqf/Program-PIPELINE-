@@ -54,6 +54,15 @@ def GerarNum2():
     Processos2.TempoExecucao_2.setText(str(random.randrange(1, 101)))
     Processos2.OrdemChegada_2.setText('2')
     Processos2.Prioridade_2.setText(str(random.randrange(1, 256)))
+
+def LimparCampos2():
+    Processos2.TempoExecucao_1.setText("")
+    Processos2.OrdemChegada_1.setText("")
+    Processos2.Prioridade_1.setText("")
+    Processos2.TempoExecucao_2.setText("")
+    Processos2.OrdemChegada_2.setText("")
+    Processos2.Prioridade_2.setText("")
+
 ####################################### 3 PROCESSOS ##############################################
 def GerarCrit3(index):
     if Processos3.TipoEscala.currentText() == 'SJF':
@@ -103,6 +112,18 @@ def GerarNum3():
     Processos3.TempoExecucao_3.setText(str(random.randrange(1, 101)))
     Processos3.OrdemChegada_3.setText('3')
     Processos3.Prioridade_3.setText(str(random.randrange(1, 256)))
+
+def LimparCampos3():
+    Processos3.TempoExecucao_1.setText("")
+    Processos3.OrdemChegada_1.setText("")
+    Processos3.Prioridade_1.setText("")
+    Processos3.TempoExecucao_2.setText("")
+    Processos3.OrdemChegada_2.setText("")
+    Processos3.Prioridade_2.setText("")
+    Processos3.TempoExecucao_3.setText("")
+    Processos3.OrdemChegada_3.setText("")
+    Processos3.Prioridade_3.setText("")
+
 ####################################### 4 PROCESSOS ##############################################
 def GerarCrit4(index):
     if Processos4.TipoEscala.currentText() == 'SJF':
@@ -156,6 +177,20 @@ def GerarNum4():
     Processos4.TempoExecucao_4.setText(str(random.randrange(1, 101)))
     Processos4.OrdemChegada_4.setText('4')
     Processos4.Prioridade_4.setText(str(random.randrange(1, 256)))
+
+def LimparCampos4():
+    Processos4.TempoExecucao_1.setText("")
+    Processos4.OrdemChegada_1.setText("")
+    Processos4.Prioridade_1.setText("")
+    Processos4.TempoExecucao_2.setText("")
+    Processos4.OrdemChegada_2.setText("")
+    Processos4.Prioridade_2.setText("")
+    Processos4.TempoExecucao_3.setText("")
+    Processos4.OrdemChegada_3.setText("")
+    Processos4.Prioridade_3.setText("")
+    Processos4.TempoExecucao_4.setText("")
+    Processos4.OrdemChegada_4.setText("")
+    Processos4.Prioridade_4.setText("")
 
 ####################################### 5 PROCESSOS ##############################################
 def GerarCrit5(index):
@@ -214,6 +249,23 @@ def GerarNum5():
     Processos5.TempoExecucao_5.setText(str(random.randrange(1, 101)))
     Processos5.OrdemChegada_5.setText('5')
     Processos5.Prioridade_5.setText(str(random.randrange(1, 256)))
+
+def LimparCampos5():
+    Processos5.TempoExecucao_1.setText("")
+    Processos5.OrdemChegada_1.setText("")
+    Processos5.Prioridade_1.setText("")
+    Processos5.TempoExecucao_2.setText("")
+    Processos5.OrdemChegada_2.setText("")
+    Processos5.Prioridade_2.setText("")
+    Processos5.TempoExecucao_3.setText("")
+    Processos5.OrdemChegada_3.setText("")
+    Processos5.Prioridade_3.setText("")
+    Processos5.TempoExecucao_4.setText("")
+    Processos5.OrdemChegada_4.setText("")
+    Processos5.Prioridade_4.setText("")
+    Processos5.TempoExecucao_5.setText("")
+    Processos5.OrdemChegada_5.setText("")
+    Processos5.Prioridade_5.setText("")
 
 ####################################### 6 PROCESSOS ##############################################
 def GerarCrit6(index):
@@ -277,20 +329,135 @@ def GerarNum6():
     Processos6.OrdemChegada_6.setText('6')
     Processos6.Prioridade_6.setText(str(random.randrange(1, 256)))
 
+def LimparCampos6():
+    Processos6.TempoExecucao_1.setText("")
+    Processos6.OrdemChegada_1.setText("")
+    Processos6.Prioridade_1.setText("")
+    Processos6.TempoExecucao_2.setText("")
+    Processos6.OrdemChegada_2.setText("")
+    Processos6.Prioridade_2.setText("")
+    Processos6.TempoExecucao_3.setText("")
+    Processos6.OrdemChegada_3.setText("")
+    Processos6.Prioridade_3.setText("")
+    Processos6.TempoExecucao_4.setText("")
+    Processos6.OrdemChegada_4.setText("")
+    Processos6.Prioridade_4.setText("")
+    Processos6.TempoExecucao_5.setText("")
+    Processos6.OrdemChegada_5.setText("")
+    Processos6.Prioridade_5.setText("")
+    Processos6.TempoExecucao_6.setText("")
+    Processos6.OrdemChegada_6.setText("")
+    Processos6.Prioridade_6.setText("")
+####################################### 6 PROCESSOS ##############################################
+def GerarCrit7(index):
+    if Processos7.TipoEscala.currentText() == 'SJF':
+        Processos7.TipoDesempate.setEnabled(True)
+        Processos7.TipoDesempate.clear()
+        Processos7.TipoDesempate.addItem("FIFO")
+        Processos7.TipoDesempate.addItem("Por Prioridade")
+    elif Processos7.TipoEscala.currentText() == 'Por Prioridade':
+        Processos7.TipoDesempate.setEnabled(True)
+        Processos7.TipoDesempate.clear()
+        Processos7.TipoDesempate.addItem("FIFO")
+        Processos7.TipoDesempate.addItem("SJF")
+    elif Processos7.TipoEscala.currentText() == 'FIFO':
+        Processos7.TipoDesempate.setEnabled(False)
+
+    
+def GerarTabela7():
+    TipoEscalonamento = Processos7.TipoEscala.currentText()
+    try:
+        processos = [
+            ('P1', int(Processos7.TempoExecucao_1.text()), int(Processos7.OrdemChegada_1.text()), int(Processos7.Prioridade_1.text())),
+            ('P2', int(Processos7.TempoExecucao_2.text()), int(Processos7.OrdemChegada_2.text()), int(Processos7.Prioridade_2.text())),
+            ('P3', int(Processos7.TempoExecucao_3.text()), int(Processos7.OrdemChegada_3.text()), int(Processos7.Prioridade_3.text())),
+            ('P4', int(Processos7.TempoExecucao_4.text()), int(Processos7.OrdemChegada_4.text()), int(Processos7.Prioridade_4.text())),
+            ('P5', int(Processos7.TempoExecucao_5.text()), int(Processos7.OrdemChegada_5.text()), int(Processos7.Prioridade_5.text())),
+            ('P6', int(Processos7.TempoExecucao_6.text()), int(Processos7.OrdemChegada_6.text()), int(Processos7.Prioridade_6.text())),
+            ('P7', int(Processos7.TempoExecucao_7.text()), int(Processos7.OrdemChegada_7.text()), int(Processos7.Prioridade_7.text()))           
+            ]
+        if TipoEscalonamento == 'FIFO':
+            devs.GerarTabela(devs.calcularFIFO(processos))
+        elif TipoEscalonamento == 'SJF':
+            if Processos7.TipoDesempate.currentText() == 'FIFO':
+                devs.GerarTabela(devs.calcularSJF(processos, 1))
+            elif Processos7.TipoDesempate.currentText() == 'Por Prioridade':
+                devs.GerarTabela(devs.calcularSJF(processos, 2))
+        elif TipoEscalonamento == 'Por Prioridade':
+            if Processos7.TipoDesempate.currentText() == 'FIFO':
+                devs.GerarTabela(devs.calcularPorPrioridade(processos, 2))
+            elif Processos7.TipoDesempate.currentText() == 'SJF':
+                devs.GerarTabela(devs.calcularPorPrioridade(processos, 1))
+    except ValueError:
+        QMessageBox.about(Processos7, "Error Detectado", "Falta valores ou algo foi digitado errado!")
+
+def GerarNum7():
+    Processos7.TempoExecucao_1.setText(str(random.randrange(1, 101)))
+    Processos7.OrdemChegada_1.setText('1')
+    Processos7.Prioridade_1.setText(str(random.randrange(1, 256)))
+    Processos7.TempoExecucao_2.setText(str(random.randrange(1, 101)))
+    Processos7.OrdemChegada_2.setText('2')
+    Processos7.Prioridade_2.setText(str(random.randrange(1, 256)))
+    Processos7.TempoExecucao_3.setText(str(random.randrange(1, 101)))
+    Processos7.OrdemChegada_3.setText('3')
+    Processos7.Prioridade_3.setText(str(random.randrange(1, 256)))
+    Processos7.TempoExecucao_4.setText(str(random.randrange(1, 101)))
+    Processos7.OrdemChegada_4.setText('4')
+    Processos7.Prioridade_4.setText(str(random.randrange(1, 256)))
+    Processos7.TempoExecucao_5.setText(str(random.randrange(1, 101)))
+    Processos7.OrdemChegada_5.setText('5')
+    Processos7.Prioridade_5.setText(str(random.randrange(1, 256)))
+    Processos7.TempoExecucao_6.setText(str(random.randrange(1, 101)))
+    Processos7.OrdemChegada_6.setText('6')
+    Processos7.Prioridade_6.setText(str(random.randrange(1, 256)))
+    Processos7.TempoExecucao_7.setText(str(random.randrange(1, 101)))
+    Processos7.OrdemChegada_7.setText('6')
+    Processos7.Prioridade_7.setText(str(random.randrange(1, 256)))
+
+def LimparCampos7():
+    Processos7.TempoExecucao_1.setText("")
+    Processos7.OrdemChegada_1.setText("")
+    Processos7.Prioridade_1.setText("")
+    Processos7.TempoExecucao_2.setText("")
+    Processos7.OrdemChegada_2.setText("")
+    Processos7.Prioridade_2.setText("")
+    Processos7.TempoExecucao_3.setText("")
+    Processos7.OrdemChegada_3.setText("")
+    Processos7.Prioridade_3.setText("")
+    Processos7.TempoExecucao_4.setText("")
+    Processos7.OrdemChegada_4.setText("")
+    Processos7.Prioridade_4.setText("")
+    Processos7.TempoExecucao_5.setText("")
+    Processos7.OrdemChegada_5.setText("")
+    Processos7.Prioridade_5.setText("")
+    Processos7.TempoExecucao_6.setText("")
+    Processos7.OrdemChegada_6.setText("")
+    Processos7.Prioridade_6.setText("")
+    Processos7.TempoExecucao_7.setText("")
+    Processos7.OrdemChegada_7.setText("")
+    Processos7.Prioridade_7.setText("")
 ################################### CARREGAR PROCESSOS #########################################
 def carregarprocessos():
     valor = int(SelectProcess.process.currentText())
     SelectProcess.close()
     if valor == 2:
+        LimparCampos2()
         Processos2.show()
     elif valor == 3:
+        LimparCampos3()
         Processos3.show()
     elif valor == 4:
+        LimparCampos4()
         Processos4.show()
     elif valor == 5:
+        LimparCampos5()
         Processos5.show()
     elif valor == 6:
+        LimparCampos6()
         Processos6.show()
+    elif valor == 7:
+        LimparCampos7()
+        Processos7.show()
 
 def abrirprocessos(valor):
     if valor == 2:
@@ -303,6 +470,9 @@ def abrirprocessos(valor):
         Processos5.show()
     elif valor == 6:
         Processos6.show()
+    elif valor == 7:
+        LimparCampos7()
+        Processos7.show()
 ############################## CONNECTAR SQL ########################################################
 
 def conexaobanco(nomeserver: str, nomebanco: str):
@@ -393,26 +563,37 @@ if __name__ == '__main__':
     Processos2.GerarTabela.clicked.connect(GerarTabela2)
     Processos2.GerarRandom.triggered.connect(GerarNum2)
     Processos2.TipoEscala.activated.connect(GerarCrit2)
+    Processos2.LimparCampos.triggered.connect(LimparCampos2)
     #################### 3 PROCESSOS ##########################################
     Processos3 = uic.loadUi("Processos3.ui")
     Processos3.GerarTabela.clicked.connect(GerarTabela3)
     Processos3.GerarRandom.triggered.connect(GerarNum3)
     Processos3.TipoEscala.activated.connect(GerarCrit3)
+    Processos3.LimparCampos.triggered.connect(LimparCampos3)
     #################### 4 PROCESSOS ##########################################
     Processos4 = uic.loadUi("Processos4.ui")
     Processos4.GerarTabela.clicked.connect(GerarTabela4)
     Processos4.GerarRandom.triggered.connect(GerarNum4)
     Processos4.TipoEscala.activated.connect(GerarCrit4)
+    Processos4.LimparCampos.triggered.connect(LimparCampos4)
     #################### 5 PROCESSOS ##########################################
     Processos5 = uic.loadUi("Processos5.ui")
     Processos5.GerarTabela.clicked.connect(GerarTabela5)
     Processos5.GerarRandom.triggered.connect(GerarNum5)
     Processos5.TipoEscala.activated.connect(GerarCrit5)
+    Processos5.LimparCampos.triggered.connect(LimparCampos5)
     #################### 6 PROCESSOS ##########################################
     Processos6 = uic.loadUi("Processos6.ui")
     Processos6.GerarTabela.clicked.connect(GerarTabela6)
     Processos6.GerarRandom.triggered.connect(GerarNum6)
     Processos6.TipoEscala.activated.connect(GerarCrit6)
+    Processos6.LimparCampos.triggered.connect(LimparCampos6)
+    #################### 7 PROCESSOS ##########################################
+    Processos7 = uic.loadUi("Processos7.ui")
+    Processos7.GerarTabela.clicked.connect(GerarTabela7)
+    Processos7.GerarRandom.triggered.connect(GerarNum7)
+    Processos7.TipoEscala.activated.connect(GerarCrit7)
+    Processos7.LimparCampos.triggered.connect(LimparCampos7)
     ################### Seleção Processos #####################################
     SelectProcess = uic.loadUi("ProcessosSelect.ui")
     SelectProcess.LoadProcess.clicked.connect(carregarprocessos)

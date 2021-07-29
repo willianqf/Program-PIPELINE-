@@ -30,13 +30,14 @@ def calcularFIFO(valor): #Recebe list ('Nome Processo', 'Tempo de execução', '
             tempoEspera.append(tempoAux)
             processosExecutados.append(process[x][0])
     tempoMedioEspera = sum(tempoEspera)/len(process)
-    return process, tempoEspera, tempoTotal, tempoList, tempoMedioEspera, processosExecutados 
+    return process, tempoEspera, tempoTotal, tempoList, tempoMedioEspera, processosExecutados, valor 
     #Retorna: process             <- vetor dos processos ordenados por prioridade   
     #         tempoEspera         <- vetor em lista por tempo de espera
     #         tempoTotal          <- Tempo total utilizado
     #         templist            <- Lista do tempo total
     #         tempoMedioEspera    <- calculo do tempo médio de espera
-    #         processosExecutados <- Ordem dos processos executados (p1,p2...)   
+    #         processosExecutados <- Ordem dos processos executados (p1,p2...)  
+    #         valor               <- Retorna a lista de processos 
 
 
 #MENOR TEMPO - Tempo de execução
@@ -65,13 +66,14 @@ def calcularSJF(valor, ordem): #Recebe list ('Nome Processo', 'Tempo de execuç�
             tempoEspera.append(tempoAux)
             processosExecutados.append(process[x][0])
     tempoMedioEspera = sum(tempoEspera)/len(process)
-    return process, tempoEspera, tempoTotal, tempoList, tempoMedioEspera, processosExecutados 
+    return process, tempoEspera, tempoTotal, tempoList, tempoMedioEspera, processosExecutados, valor  
     #Retorna: process             <- vetor dos processos ordenados por prioridade   
     #         tempoEspera         <- vetor em lista por tempo de espera
     #         tempoTotal          <- Tempo total utilizado
     #         templist            <- Lista do tempo total
     #         tempoMedioEspera    <- calculo do tempo médio de espera
     #         processosExecutados <- Ordem dos processos executados (p1,p2...)   
+    #         valor               <- Retorna a lista de processos 
 
 #MENOR PRIORIDADE
 def calcularPorPrioridade(valor, ordem: int): #Recebe list ('Nome Processo', 'Tempo de execução', 'Ordem de chegada', 'Prioridade')
@@ -99,13 +101,14 @@ def calcularPorPrioridade(valor, ordem: int): #Recebe list ('Nome Processo', 'Te
             tempoEspera.append(tempoAux)
             processosExecutados.append(process[x][0])
     tempoMedioEspera = sum(tempoEspera)/len(process)
-    return process, tempoEspera, tempoTotal, tempoList, tempoMedioEspera, processosExecutados 
+    return process, tempoEspera, tempoTotal, tempoList, tempoMedioEspera, processosExecutados, valor  
     #Retorna: process             <- vetor dos processos ordenados por prioridade   
     #         tempoEspera         <- vetor em lista por tempo de espera
     #         tempoTotal          <- Tempo total utilizado
     #         templist            <- Lista do tempo total
     #         tempoMedioEspera    <- calculo do tempo médio de espera
     #         processosExecutados <- Ordem dos processos executados (p1,p2...)   
+    #         valor               <- Retorna a lista de processos 
 
 def test(valor):
     ps.ylabel('Tempo de Execução (ns)')

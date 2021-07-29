@@ -33,17 +33,17 @@ def GerarTabela2():
             ('P2', int(Processos2.TempoExecucao_2.text()), int(Processos2.OrdemChegada_2.text()), int(Processos2.Prioridade_2.text())),
             ]
         if TipoEscalonamento == 'FIFO':
-            devs.GerarTabela(devs.calcularFIFO(processos))
+            devs.GerarTabela(devs.calcularFIFO(processos), True)
         elif TipoEscalonamento == 'SJF':
             if Processos2.TipoDesempate.currentText() == 'FIFO':
-                devs.GerarTabela(devs.calcularSJF(processos, 1))
+                devs.GerarTabela(devs.calcularSJF(processos, 1), True)
             elif Processos2.TipoDesempate.currentText() == 'Por Prioridade':
-                devs.GerarTabela(devs.calcularSJF(processos, 2))
+                devs.GerarTabela(devs.calcularSJF(processos, 2), True)
         elif TipoEscalonamento == 'Por Prioridade':
             if Processos2.TipoDesempate.currentText() == 'FIFO':
-                devs.GerarTabela(devs.calcularPorPrioridade(processos, 2))
+                devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), True)
             elif Processos2.TipoDesempate.currentText() == 'SJF':
-                devs.GerarTabela(devs.calcularPorPrioridade(processos, 1))
+                devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), True)
     except ValueError:
         QMessageBox.about(Processos2, "Error Detectado", "Falta valores ou algo foi digitado errado!")
 
@@ -88,17 +88,17 @@ def GerarTabela3():
             ('P3', int(Processos3.TempoExecucao_3.text()), int(Processos3.OrdemChegada_3.text()), int(Processos3.Prioridade_3.text())),
             ]
         if TipoEscalonamento == 'FIFO':
-            devs.GerarTabela(devs.calcularFIFO(processos))
+            devs.GerarTabela(devs.calcularFIFO(processos), True)
         elif TipoEscalonamento == 'SJF':
             if Processos3.TipoDesempate.currentText() == 'FIFO':
-                devs.GerarTabela(devs.calcularSJF(processos, 1))
+                devs.GerarTabela(devs.calcularSJF(processos, 1), True)
             elif Processos3.TipoDesempate.currentText() == 'Por Prioridade':
-                devs.GerarTabela(devs.calcularSJF(processos, 2))
+                devs.GerarTabela(devs.calcularSJF(processos, 2), True)
         elif TipoEscalonamento == 'Por Prioridade':
             if Processos3.TipoDesempate.currentText() == 'FIFO':
-                devs.GerarTabela(devs.calcularPorPrioridade(processos, 2))
+                devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), True)
             elif Processos3.TipoDesempate.currentText() == 'SJF':
-                devs.GerarTabela(devs.calcularPorPrioridade(processos, 1))
+                devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), True)
     except ValueError:
         QMessageBox.about(Processos3, "Error Detectado", "Falta valores ou algo foi digitado errado!")
 
@@ -150,17 +150,17 @@ def GerarTabela4():
             ('P4', int(Processos4.TempoExecucao_4.text()), int(Processos4.OrdemChegada_4.text()), int(Processos4.Prioridade_4.text()))
             ]
         if TipoEscalonamento == 'FIFO':
-            devs.GerarTabela(devs.calcularFIFO(processos))
+            devs.GerarTabela(devs.calcularFIFO(processos), True)
         elif TipoEscalonamento == 'SJF':
             if Processos4.TipoDesempate.currentText() == 'FIFO':
-                devs.GerarTabela(devs.calcularSJF(processos, 1))
+                devs.GerarTabela(devs.calcularSJF(processos, 1), True)
             elif Processos4.TipoDesempate.currentText() == 'Por Prioridade':
-                devs.GerarTabela(devs.calcularSJF(processos, 2))
+                devs.GerarTabela(devs.calcularSJF(processos, 2), True)
         elif TipoEscalonamento == 'Por Prioridade':
             if Processos4.TipoDesempate.currentText() == 'FIFO':
-                devs.GerarTabela(devs.calcularPorPrioridade(processos, 2))
+                devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), True)
             elif Processos4.TipoDesempate.currentText() == 'SJF':
-                devs.GerarTabela(devs.calcularPorPrioridade(processos, 1))
+                devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), True)
     except ValueError:
         QMessageBox.about(Processos4, "Error Detectado", "Falta valores ou algo foi digitado errado!")
 
@@ -219,17 +219,17 @@ def GerarTabela5():
             ('P5', int(Processos5.TempoExecucao_5.text()), int(Processos5.OrdemChegada_5.text()), int(Processos5.Prioridade_5.text()))        
             ]
         if TipoEscalonamento == 'FIFO':
-            devs.GerarTabela(devs.calcularFIFO(processos))
+            devs.GerarTabela(devs.calcularFIFO(processos), True)
         elif TipoEscalonamento == 'SJF':
             if Processos5.TipoDesempate.currentText() == 'FIFO':
-                devs.GerarTabela(devs.calcularSJF(processos, 1))
+                devs.GerarTabela(devs.calcularSJF(processos, 1), True)
             elif Processos5.TipoDesempate.currentText() == 'Por Prioridade':
-                devs.GerarTabela(devs.calcularSJF(processos, 2))
+                devs.GerarTabela(devs.calcularSJF(processos, 2), True)
         elif TipoEscalonamento == 'Por Prioridade':
             if Processos5.TipoDesempate.currentText() == 'FIFO':
-                devs.GerarTabela(devs.calcularPorPrioridade(processos, 2))
+                devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), True)
             elif Processos5.TipoDesempate.currentText() == 'SJF':
-                devs.GerarTabela(devs.calcularPorPrioridade(processos, 1))
+                devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), True)
     except ValueError:
         QMessageBox.about(Processos5, "Error Detectado", "Falta valores ou algo foi digitado errado!")
 
@@ -295,17 +295,17 @@ def GerarTabela6():
             ('P6', int(Processos6.TempoExecucao_6.text()), int(Processos6.OrdemChegada_6.text()), int(Processos6.Prioridade_6.text()))          
             ]
         if TipoEscalonamento == 'FIFO':
-            devs.GerarTabela(devs.calcularFIFO(processos))
+            devs.GerarTabela(devs.calcularFIFO(processos), True)
         elif TipoEscalonamento == 'SJF':
             if Processos6.TipoDesempate.currentText() == 'FIFO':
-                devs.GerarTabela(devs.calcularSJF(processos, 1))
+                devs.GerarTabela(devs.calcularSJF(processos, 1), True)
             elif Processos6.TipoDesempate.currentText() == 'Por Prioridade':
-                devs.GerarTabela(devs.calcularSJF(processos, 2))
+                devs.GerarTabela(devs.calcularSJF(processos, 2), True)
         elif TipoEscalonamento == 'Por Prioridade':
             if Processos6.TipoDesempate.currentText() == 'FIFO':
-                devs.GerarTabela(devs.calcularPorPrioridade(processos, 2))
+                devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), True)
             elif Processos6.TipoDesempate.currentText() == 'SJF':
-                devs.GerarTabela(devs.calcularPorPrioridade(processos, 1))
+                devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), True)
     except ValueError:
         QMessageBox.about(Processos6, "Error Detectado", "Falta valores ou algo foi digitado errado!")
 
@@ -377,17 +377,17 @@ def GerarTabela7():
             ('P7', int(Processos7.TempoExecucao_7.text()), int(Processos7.OrdemChegada_7.text()), int(Processos7.Prioridade_7.text()))           
             ]
         if TipoEscalonamento == 'FIFO':
-            devs.GerarTabela(devs.calcularFIFO(processos))
+            devs.GerarTabela(devs.calcularFIFO(processos), True)
         elif TipoEscalonamento == 'SJF':
             if Processos7.TipoDesempate.currentText() == 'FIFO':
-                devs.GerarTabela(devs.calcularSJF(processos, 1))
+                devs.GerarTabela(devs.calcularSJF(processos, 1), True)
             elif Processos7.TipoDesempate.currentText() == 'Por Prioridade':
-                devs.GerarTabela(devs.calcularSJF(processos, 2))
+                devs.GerarTabela(devs.calcularSJF(processos, 2), True)
         elif TipoEscalonamento == 'Por Prioridade':
             if Processos7.TipoDesempate.currentText() == 'FIFO':
-                devs.GerarTabela(devs.calcularPorPrioridade(processos, 2))
+                devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), True)
             elif Processos7.TipoDesempate.currentText() == 'SJF':
-                devs.GerarTabela(devs.calcularPorPrioridade(processos, 1))
+                devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), True)
     except ValueError:
         QMessageBox.about(Processos7, "Error Detectado", "Falta valores ou algo foi digitado errado!")
 

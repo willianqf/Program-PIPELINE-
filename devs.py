@@ -1,10 +1,13 @@
 import matplotlib.pyplot as ps
 import io
 from docx import Document
+#import pandas as pd
+import numpy as np
 
-processos = [('P1', 15, 1, 4),('P2',20, 2, 3),('P3', 20, 3, 1),('P4', 45, 4, 2)]
+
+#processos = [('P1', 15, 1, 4),('P2',20, 2, 3),('P3', 20, 3, 1),('P4', 45, 4, 2)]
 #processos = [('P1', 7, 1, 2),('P2', 12, 2, 3),('P3', 40, 3, 4),('P4', 25, 4, 2),('P5', 36, 5, 1),('P6', 20, 6, 3)]
-
+processos = [('P1', 15, 1, 3),('P2',30, 2, 1),('P3', 5, 3, 4),('P4', 10, 4, 2)]
 #ORDEM DE CHEGADA
 def calcularFIFO(valor): #Recebe list ('Nome Processo', 'Tempo de execução', 'Ordem de chegada', 'Prioridade')
     tempoEspera = [] #Pega a list de tempo de espera por processo
@@ -104,9 +107,8 @@ def calcularPorPrioridade(valor, ordem: int): #Recebe list ('Nome Processo', 'Te
     #         tempoMedioEspera    <- calculo do tempo médio de espera
     #         processosExecutados <- Ordem dos processos executados (p1,p2...)   
 
-
-def GerarTabela(valor): #Gera Tabela de Gantt
-    ps.ylabel('Tempo de Execuçao (ns)')
+def test(valor):
+    ps.ylabel('Tempo de Execução (ns)')
     ps.xlabel('Processos')
     ps.axis(ymin=0 ,ymax = valor[2]+50)
     #ps.plot(processos, tempo, label='Tempo de Execução', marker='o') #(y, x, 'legenda', 'pontos')
@@ -115,23 +117,60 @@ def GerarTabela(valor): #Gera Tabela de Gantt
     ps.show()
     #ps.savefig('SalveArquivo.png') salvar arquivo
 
-def Test():    
-    fig, gnt = ps.subplots() 
-    gnt.set_ylim(0, 50) 
-    gnt.set_xlim(0, 160) 
-    gnt.set_xlabel('TEMPO (NS)') 
-    gnt.set_ylabel('PROCESSOS') 
-    gnt.set_yticks([15, 25, 35]) 
-    gnt.set_yticklabels(['P1', 'P2', 'P3']) 
-    gnt.grid(True) 
-    gnt.broken_barh([(40, 50)], (30, 9), facecolors =('tab:orange')) 
-    gnt.broken_barh([(110, 10), (150, 10)], (10, 9), 
-                         facecolors ='tab:blue') 
-    gnt.broken_barh([(10, 50), (100, 20), (130, 10)], (20, 9), 
-                                  facecolors =('tab:red')) 
-                                
+def CriarTabela(processos, inicio, fim):
+    # VARIAVEIS DE CONSTRUÇÃO DO GRÁFICO
+    y = processos # PROCESSOS DA TABELA Y
+    c = []  # TIPO USADO (quantidade de processos)
+    for x in y:
+        c.append(0)
+    xinicio = inicio #Inicio processo
+    xfim = fim # Fim processo
+    # CORES DA TABELA
+    color_mapper = np.vectorize(lambda x: {0: 'red', 1: 'blue'}.get(x))
+    # Plot a line for every line of data in your file
+    ps.hlines(y, xinicio, xfim, colors=color_mapper(c))
+    ps.ylabel('Tempo de Execução (ns)')
+    ps.xlabel('Processos')
+    ps.grid(True) #Deixar tabelado
     ps.show()
 
-
-#GerarTabela(calcularFIFO(processos))
+def GerarTabela(valor, exibir: bool): #Gera Tabela de Gantt
+    p = valor
+    xini = valor[1]#p[1]
+    xfim = valor[3]
+    tempototal = valor[2]
+    y = p[5]
+    processos = []
+    inicio = []
+    fim = []
+    tups = []
+    inicial = 0
+    while inicial < len(y):
+        tups.append([y[inicial], xini[inicial], xfim[inicial]])
+        inicial+=1
+    process = sorted(tups, key = lambda test: test[0])
+    for x in process:
+        processos.append(x[0])
+        inicio.append(x[1])
+        fim.append(x[2])
+    if exibir == True:
+        CriarTabela(processos, inicio, fim)
+    return processos, inicio, fim, tempototal
+    '''
+    # VARIAVEIS DE CONSTRUÇÃO DO GRÁFICO
+    y = valor[5] # PROCESSOS DA TABELA Y
+    c = []  # TIPO USADO (quantidade de processos)
+    for x in y:
+        c.append(0)
+    xinicio = valor[1] #Inicio processo
+    xfim = valor[3] # Fim processo
+    # CORES DA TABELA
+    color_mapper = np.vectorize(lambda x: {0: 'red', 1: 'blue'}.get(x))
+    # Plot a line for every line of data in your file
+    ps.hlines(y, xinicio, xfim, colors=color_mapper(c))
+    ps.ylabel('Tempo de Execuçao (ns)')
+    ps.xlabel('Processos')
+    ps.grid(True) #Deixar tabelado
+    ps.show()
+    '''
 #test()

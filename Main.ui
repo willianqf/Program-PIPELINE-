@@ -175,8 +175,9 @@ color: rgb(255, 255, 255);</string>
    </property>
    <widget class="QMenu" name="menuInfo">
     <property name="title">
-     <string>Info</string>
+     <string>Ferramentas</string>
     </property>
+    <addaction name="DesconectarSQL"/>
     <addaction name="infodev"/>
     <addaction name="cred"/>
    </widget>
@@ -211,6 +212,11 @@ color: rgb(255, 255, 255);</string>
   <action name="cred">
    <property name="text">
     <string>Créditos</string>
+   </property>
+  </action>
+  <action name="DesconectarSQL">
+   <property name="text">
+    <string>Desconectar SQL</string>
    </property>
   </action>
  </widget>

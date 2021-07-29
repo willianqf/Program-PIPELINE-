@@ -505,30 +505,38 @@ def sqlserver():
 
 def ConnectarServidor():
     if SQLlogin.SelectAut.currentText() == 'SQL Windows':
-        try:
-            global NomeServer
-            global NomeBanco
-            global ConnectServer
-            con = conexaobanco(SQLlogin.SQLname.text(), 'PIPESQL')
-            cursor = con.cursor()
-            cursor.close()
-            con.close()
-            NomeServer = SQLlogin.SQLname.text()
-            NomeBanco = 'PIPESQL'
-            ConnectServer = True
-            QMessageBox.about(SQLlogin, "Conexão Realidade", "O banco está connectado e pronto para ser usado!")
-            SQLlogin.close()
-        except pyodbc.InterfaceError:
-            QMessageBox.about(SQLlogin, "Erro de Conexão", "O banco não existe ou o servidor está incorreto!")
-        except Exception:
-            QMessageBox.about(SQLlogin, "Erro de Conexão", "O banco demorou a responder. Verifique se não existe dados errados")
+            msq = QMessageBox()
+            msq.setWindowTitle("Aviso de Conexão") #Define o titulo
+            msq.setText('Você conectará com o banco: \n'+str(SQLlogin.SQLname.text())) #Define descrição
+            msq.setInformativeText("\nDeseja mesmo conectar?") #Define descrição secundária
+            msq.setIcon(QMessageBox.Warning) #Abre mensagem de atenção
+            msq.setStandardButtons(QMessageBox.Yes|QMessageBox.Cancel) #Criar opções de click na mensagem
+            resposta = msq.exec_()
+            if resposta == QMessageBox.Yes:
+                try:
+                    global NomeServer
+                    global NomeBanco
+                    global ConnectServer
+                    con = conexaobanco(SQLlogin.SQLname.text(), 'PIPESQL')
+                    cursor = con.cursor()
+                    cursor.close()
+                    con.close()
+                    NomeServer = SQLlogin.SQLname.text()
+                    NomeBanco = 'PIPESQL'
+                    ConnectServer = True
+                    QMessageBox.about(SQLlogin, "Conexão Realidade", "Conexão sucedida!\nVocê agora está conectado ao banco.\n\n"+NomeServer)
+                    SQLlogin.close()
+                except pyodbc.InterfaceError:
+                    QMessageBox.about(SQLlogin, "Erro de Conexão", "O banco não existe ou o servidor está incorreto!")
+                except Exception:
+                    QMessageBox.about(SQLlogin, "Erro de Conexão", "O banco demorou a responder. Verifique se não existe dados errados")
     else:
         print('Enviar senha e nome também')
     
 def devinfo():
-    QMessageBox.about(Main, "Creditos", "Programa desenvolvido em 20/07/2021\nDeveloper: Willian Quirino / Dev Back-End\n\nPrograma desenvolvido para fins acadêmicos que visa o calculo de tabelas escalonadas para projetos de sistemas operações.\nO programa tem como apriomoramento de criação de tabelas FIFO/SJT/Por Prioridade utilizando processos de escalas.\n\n\nContatos: https://github.com/willianqf/Program-PIPELINE-")
+    QMessageBox.about(Main, "Creditos", "Programa desenvolvido em 20/07/2021\nDeveloper: Willian Quirino / Dev Back-End\n\nPrograma desenvolvido para fins acadêmicos que visa o calculo de tabelas escalonadas para projetos de sistemas operacionais.\nO programa tem como apriomoramento de criação de tabelas FIFO/SJT/Por Prioridade utilizando processos de escalas junto a tabela de Gantt.\n\n\nO projeto pode ser acessado junto ao seu código fonte em:\ngithub.com/willianqf/Program-PIPELINE-")
 def devinfo2():
-    QMessageBox.about(Main, "Informações do Programa", "Este programa tem fins de calculo de escalonamento para processos operacionais.\n\nCalculos disponíiveis: FIFO/SJF/Por Prioridade\n\nComo usar o programa?\nDeve-se utilizar a quantidade de processos que queira calcular no botão 'Calcular Processos'\n\nComo gero relatório?\nO programa oferece um local que pode ser alterado no momento do save de relatório. O relatório é gerado em PDF contendo a tabela de processo junto ao gráfico de Gantt\n\nO programa é de código aberto?\nO programa pode ser acessado com seu código fonte através do canal do GIT disponível nos créditos")
+    QMessageBox.about(Main, "Informações do Programa", "Este programa tem fins de calculo de escalonamento para processos operacionais.\n\nCalculos disponíiveis: FIFO/SJF/Por Prioridade\n\nComo usar o programa?\nDeve-se utilizar a quantidade de processos que queira calcular no botão 'Calcular Processos'\n\nComo gero um relatório?\nO programa oferece um local que pode ser alterado no momento do save de relatório. O relatório é gerado em PDF contendo a tabela de processo junto ao gráfico de Gantt\n\nO programa é de código aberto?\nO programa pode ser acessado com seu código fonte através do canal do GIT disponível nos créditos\n\nComo conecto com o banco de dados local?\nVocê precisa ter o SQL Server instalado na sua máquina para poder usar a conexão com o banco. Basta pegar o indereço NOME\SQLEXPRESS")
 
 ####################################  MAIN  #########################################################
 def abrirselect():
@@ -536,10 +544,31 @@ def abrirselect():
 
 def abrirsql():
     global ConnectServer
+    global NomeServer
     if ConnectServer == False:
         SQLlogin.show()
     else:
-        QMessageBox.about(Main, "Conexão já realizada", "Você já está conectado com o banco")
+        QMessageBox.about(Main, "Conexão já realizada", "Você já está conectado com o banco:\n\n"+NomeServer)
+def DesconectarSQL():
+    global ConnectServer
+    global NomeServer
+    global NomeBanco
+    if ConnectServer == True:
+        msq = QMessageBox()
+        msq.setWindowTitle("Aviso de Conexão") #Define o titulo
+        msq.setText('Você está prestes a desconectar com o banco: \n'+NomeServer) #Define descrição
+        msq.setInformativeText("\nDeseja mesmo desconectar?") #Define descrição secundária
+        msq.setIcon(QMessageBox.Warning) #Abre mensagem de atenção
+        msq.setStandardButtons(QMessageBox.Yes|QMessageBox.Cancel) #Criar opções de click na mensagem
+        resposta = msq.exec_()
+        if resposta == QMessageBox.Yes:
+            banco = NomeServer
+            ConnectServer = False
+            NomeServer = ""
+            NomeBanco = ""
+            QMessageBox.about(Main, "Banco Desconectado", "Você foi desconectado ao banco:\n\n"+banco)
+    else:
+        QMessageBox.about(Main, "Sem Conexão", "Você ainda não está conectado a nenhum banco")
 
 def CarregarPIPE():
     global ConnectServer
@@ -604,6 +633,7 @@ if __name__ == '__main__':
     Main.CarregarPIPE.clicked.connect(CarregarPIPE)
     Main.cred.triggered.connect(devinfo)
     Main.infodev.triggered.connect(devinfo2)
+    Main.DesconectarSQL.triggered.connect(DesconectarSQL)
     Main.show()
     Aplicativo.exec() #Executar programa
     # WILLIANQUIRINO\SQLEXPRESS

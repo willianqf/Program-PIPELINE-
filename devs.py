@@ -1,3 +1,4 @@
+from matplotlib.collections import LineCollection
 import matplotlib.pyplot as ps
 import io
 from docx import Document
@@ -125,19 +126,20 @@ def CriarTabela(processos, inicio, fim):
     y = processos # PROCESSOS DA TABELA Y
     c = []  # TIPO USADO (quantidade de processos)
     for x in y:
-        c.append(0)
+        c.append(1)
     xinicio = inicio #Inicio processo
     xfim = fim # Fim processo
     # CORES DA TABELA
     color_mapper = np.vectorize(lambda x: {0: 'red', 1: 'blue'}.get(x))
-    # Plot a line for every line of data in your file
-    ps.hlines(y, xinicio, xfim, colors=color_mapper(c))
-    ps.ylabel('Tempo de Execução (ns)')
-    ps.xlabel('Processos')
+    # Traça uma linha de acordo com os dados apresentados
+    ps.hlines(y, xinicio, xfim, colors=color_mapper(c), lw=25)
+    #plt.hlines(cps, s_load, f_load, colors="red", lw=4)
+    ps.ylabel('PROCESSOS')
+    ps.xlabel('Tempo de Execução (ns)')
     ps.grid(True) #Deixar tabelado
     ps.show()
 
-def GerarTabela(valor, exibir: bool): #Gera Tabela de Gantt
+def GerarTabela(valor, exibir: bool): #Gera Tabela de Gantt e retorna os valores 
     p = valor
     xini = valor[1]#p[1]
     xfim = valor[3]
@@ -177,3 +179,4 @@ def GerarTabela(valor, exibir: bool): #Gera Tabela de Gantt
     ps.show()
     '''
 #test()
+

@@ -531,7 +531,8 @@ def ConnectarServidor():
                 except Exception:
                     QMessageBox.about(SQLlogin, "Erro de Conexão", "O banco demorou a responder. Verifique se não existe dados errados")
     else:
-        print('Enviar senha e nome também')
+        QMessageBox.about(SQLlogin, "Manutenção!", "Em breve será possível fazer o login em um servidor!")
+        '''                  CRIAR FUNÇÃO           '''
     
 def devinfo():
     QMessageBox.about(Main, "Creditos", "Programa desenvolvido em 20/07/2021\nDeveloper: Willian Quirino / Dev Back-End\n\nPrograma desenvolvido para fins acadêmicos que visa o calculo de tabelas escalonadas para projetos de sistemas operacionais.\nO programa tem como apriomoramento de criação de tabelas FIFO/SJT/Por Prioridade utilizando processos de escalas junto a tabela de Gantt.\n\n\nO projeto pode ser acessado junto ao seu código fonte em:\ngithub.com/willianqf/Program-PIPELINE-")

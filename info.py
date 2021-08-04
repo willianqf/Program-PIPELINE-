@@ -3,6 +3,7 @@ from PyQt5 import uic, QtWidgets, QtCore
 from PyQt5.QtWidgets import QMessageBox
 import devs 
 import pyodbc
+import GerarDocumento
 
 ConnectServer: bool = False
 NomeServer: str
@@ -62,6 +63,41 @@ def LimparCampos2():
     Processos2.TempoExecucao_2.setText("")
     Processos2.OrdemChegada_2.setText("")
     Processos2.Prioridade_2.setText("")
+
+def GerarRel2():
+    TipoEscalonamento = Processos2.TipoEscala.currentText()
+    try:
+        processos = [
+            ('P1', int(Processos2.TempoExecucao_1.text()), int(Processos2.OrdemChegada_1.text()), int(Processos2.Prioridade_1.text())),
+            ('P2', int(Processos2.TempoExecucao_2.text()), int(Processos2.OrdemChegada_2.text()), int(Processos2.Prioridade_2.text())),
+        ]
+        if TipoEscalonamento == 'FIFO':
+            val = GerarDocumento.GerarRelatorio(processos, devs.calcularFIFO(processos), devs.GerarTabela(devs.calcularFIFO(processos), False), 'FIFO', 'Nenhum')
+            if val:
+                QMessageBox.about(Processos2, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        ####################################### SJF - TEMPO DE EXECUÇÃO ##############################################
+        elif TipoEscalonamento == 'SJF':
+            if Processos2.TipoDesempate.currentText() == 'FIFO':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularSJF(processos, 1), devs.GerarTabela(devs.calcularSJF(processos, 1), False), 'SJF', 'FIFO')
+                if val:
+                    QMessageBox.about(Processos2, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+            elif Processos2.TipoDesempate.currentText() == 'Por Prioridade':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE')
+                if val:
+                    QMessageBox.about(Processos2, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        ####################################### POR PRIORIDADE ##############################################
+        elif TipoEscalonamento == 'Por Prioridade': 
+            if Processos2.TipoDesempate.currentText() == 'FIFO':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularPorPrioridade(processos, 2), devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), False), 'POR PRIORIDADE', 'FIFO')
+                if val:
+                    QMessageBox.about(Processos2, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+            elif Processos2.TipoDesempate.currentText() == 'SJF':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF')
+                if val:
+                    QMessageBox.about(Processos2, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+    except ValueError:
+        QMessageBox.about(Processos2, "Error Detectado", "Não foi possível salvar este modelo.\n\nVerifique se não existe campos vazios.")
+
 
 ####################################### 3 PROCESSOS ##############################################
 def GerarCrit3(index):
@@ -123,6 +159,41 @@ def LimparCampos3():
     Processos3.TempoExecucao_3.setText("")
     Processos3.OrdemChegada_3.setText("")
     Processos3.Prioridade_3.setText("")
+
+def GerarRel3():
+    TipoEscalonamento = Processos3.TipoEscala.currentText()
+    try:
+        processos = [
+            ('P1', int(Processos3.TempoExecucao_1.text()), int(Processos3.OrdemChegada_1.text()), int(Processos3.Prioridade_1.text())),
+            ('P2', int(Processos3.TempoExecucao_2.text()), int(Processos3.OrdemChegada_2.text()), int(Processos3.Prioridade_2.text())),
+            ('P3', int(Processos3.TempoExecucao_3.text()), int(Processos3.OrdemChegada_3.text()), int(Processos3.Prioridade_3.text())),
+        ]
+        if TipoEscalonamento == 'FIFO':
+            val = GerarDocumento.GerarRelatorio(processos, devs.calcularFIFO(processos), devs.GerarTabela(devs.calcularFIFO(processos), False), 'FIFO', 'Nenhum')
+            if val:
+                QMessageBox.about(Processos3, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        ####################################### SJF - TEMPO DE EXECUÇÃO ##############################################
+        elif TipoEscalonamento == 'SJF':
+            if Processos3.TipoDesempate.currentText() == 'FIFO':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularSJF(processos, 1), devs.GerarTabela(devs.calcularSJF(processos, 1), False), 'SJF', 'FIFO')
+                if val:
+                    QMessageBox.about(Processos3, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+            elif Processos3.TipoDesempate.currentText() == 'Por Prioridade':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE')
+                if val:
+                    QMessageBox.about(Processos3, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        ####################################### POR PRIORIDADE ##############################################
+        elif TipoEscalonamento == 'Por Prioridade': 
+            if Processos3.TipoDesempate.currentText() == 'FIFO':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularPorPrioridade(processos, 2), devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), False), 'POR PRIORIDADE', 'FIFO')
+                if val:
+                    QMessageBox.about(Processos3, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+            elif Processos3.TipoDesempate.currentText() == 'SJF':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF')
+                if val:
+                    QMessageBox.about(Processos3, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+    except ValueError:
+        QMessageBox.about(Processos3, "Error Detectado", "Não foi possível salvar este modelo.\n\nVerifique se não existe campos vazios.")
 
 ####################################### 4 PROCESSOS ##############################################
 def GerarCrit4(index):
@@ -191,6 +262,42 @@ def LimparCampos4():
     Processos4.TempoExecucao_4.setText("")
     Processos4.OrdemChegada_4.setText("")
     Processos4.Prioridade_4.setText("")
+
+def GerarRel4():
+    TipoEscalonamento = Processos4.TipoEscala.currentText()
+    try:
+        processos = [
+            ('P1', int(Processos4.TempoExecucao_1.text()), int(Processos4.OrdemChegada_1.text()), int(Processos4.Prioridade_1.text())),
+            ('P2', int(Processos4.TempoExecucao_2.text()), int(Processos4.OrdemChegada_2.text()), int(Processos4.Prioridade_2.text())),
+            ('P3', int(Processos4.TempoExecucao_3.text()), int(Processos4.OrdemChegada_3.text()), int(Processos4.Prioridade_3.text())),
+            ('P4', int(Processos4.TempoExecucao_4.text()), int(Processos4.OrdemChegada_4.text()), int(Processos4.Prioridade_4.text()))
+            ]
+        if TipoEscalonamento == 'FIFO':
+            val = GerarDocumento.GerarRelatorio(processos, devs.calcularFIFO(processos), devs.GerarTabela(devs.calcularFIFO(processos), False), 'FIFO', 'Nenhum')
+            if val:
+                QMessageBox.about(Processos4, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        ####################################### SJF - TEMPO DE EXECUÇÃO ##############################################
+        elif TipoEscalonamento == 'SJF':
+            if Processos4.TipoDesempate.currentText() == 'FIFO':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularSJF(processos, 1), devs.GerarTabela(devs.calcularSJF(processos, 1), False), 'SJF', 'FIFO')
+                if val:
+                    QMessageBox.about(Processos4, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+            elif Processos4.TipoDesempate.currentText() == 'Por Prioridade':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE')
+                if val:
+                    QMessageBox.about(Processos4, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        ####################################### POR PRIORIDADE ##############################################
+        elif TipoEscalonamento == 'Por Prioridade': 
+            if Processos4.TipoDesempate.currentText() == 'FIFO':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularPorPrioridade(processos, 2), devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), False), 'POR PRIORIDADE', 'FIFO')
+                if val:
+                    QMessageBox.about(Processos4, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+            elif Processos4.TipoDesempate.currentText() == 'SJF':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF')
+                if val:
+                    QMessageBox.about(Processos4, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+    except ValueError:
+        QMessageBox.about(Processos4, "Error Detectado", "Não foi possível salvar este modelo.\n\nVerifique se não existe campos vazios.")
 
 ####################################### 5 PROCESSOS ##############################################
 def GerarCrit5(index):
@@ -266,6 +373,43 @@ def LimparCampos5():
     Processos5.TempoExecucao_5.setText("")
     Processos5.OrdemChegada_5.setText("")
     Processos5.Prioridade_5.setText("")
+
+def GerarRel5():
+    TipoEscalonamento = Processos5.TipoEscala.currentText()
+    try:
+        processos = [
+            ('P1', int(Processos5.TempoExecucao_1.text()), int(Processos5.OrdemChegada_1.text()), int(Processos5.Prioridade_1.text())),
+            ('P2', int(Processos5.TempoExecucao_2.text()), int(Processos5.OrdemChegada_2.text()), int(Processos5.Prioridade_2.text())),
+            ('P3', int(Processos5.TempoExecucao_3.text()), int(Processos5.OrdemChegada_3.text()), int(Processos5.Prioridade_3.text())),
+            ('P4', int(Processos5.TempoExecucao_4.text()), int(Processos5.OrdemChegada_4.text()), int(Processos5.Prioridade_4.text())),
+            ('P5', int(Processos5.TempoExecucao_5.text()), int(Processos5.OrdemChegada_5.text()), int(Processos5.Prioridade_5.text()))        
+            ]
+        if TipoEscalonamento == 'FIFO':
+            val = GerarDocumento.GerarRelatorio(processos, devs.calcularFIFO(processos), devs.GerarTabela(devs.calcularFIFO(processos), False), 'FIFO', 'Nenhum')
+            if val:
+                QMessageBox.about(Processos5, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        ####################################### SJF - TEMPO DE EXECUÇÃO ##############################################
+        elif TipoEscalonamento == 'SJF':
+            if Processos5.TipoDesempate.currentText() == 'FIFO':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularSJF(processos, 1), devs.GerarTabela(devs.calcularSJF(processos, 1), False), 'SJF', 'FIFO')
+                if val:
+                    QMessageBox.about(Processos5, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+            elif Processos5.TipoDesempate.currentText() == 'Por Prioridade':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE')
+                if val:
+                    QMessageBox.about(Processos5, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        ####################################### POR PRIORIDADE ##############################################
+        elif TipoEscalonamento == 'Por Prioridade': 
+            if Processos5.TipoDesempate.currentText() == 'FIFO':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularPorPrioridade(processos, 2), devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), False), 'POR PRIORIDADE', 'FIFO')
+                if val:
+                    QMessageBox.about(Processos5, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+            elif Processos5.TipoDesempate.currentText() == 'SJF':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF')
+                if val:
+                    QMessageBox.about(Processos5, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+    except ValueError:
+        QMessageBox.about(Processos5, "Error Detectado", "Não foi possível salvar este modelo.\n\nVerifique se não existe campos vazios.")
 
 ####################################### 6 PROCESSOS ##############################################
 def GerarCrit6(index):
@@ -348,6 +492,44 @@ def LimparCampos6():
     Processos6.TempoExecucao_6.setText("")
     Processos6.OrdemChegada_6.setText("")
     Processos6.Prioridade_6.setText("")
+def GerarRel6():
+    TipoEscalonamento = Processos6.TipoEscala.currentText()
+    try:
+        processos = [
+            ('P1', int(Processos6.TempoExecucao_1.text()), int(Processos6.OrdemChegada_1.text()), int(Processos6.Prioridade_1.text())),
+            ('P2', int(Processos6.TempoExecucao_2.text()), int(Processos6.OrdemChegada_2.text()), int(Processos6.Prioridade_2.text())),
+            ('P3', int(Processos6.TempoExecucao_3.text()), int(Processos6.OrdemChegada_3.text()), int(Processos6.Prioridade_3.text())),
+            ('P4', int(Processos6.TempoExecucao_4.text()), int(Processos6.OrdemChegada_4.text()), int(Processos6.Prioridade_4.text())),
+            ('P5', int(Processos6.TempoExecucao_5.text()), int(Processos6.OrdemChegada_5.text()), int(Processos6.Prioridade_5.text())),
+            ('P6', int(Processos6.TempoExecucao_6.text()), int(Processos6.OrdemChegada_6.text()), int(Processos6.Prioridade_6.text())),
+            ]
+        if TipoEscalonamento == 'FIFO':
+            val = GerarDocumento.GerarRelatorio(processos, devs.calcularFIFO(processos), devs.GerarTabela(devs.calcularFIFO(processos), False), 'FIFO', 'Nenhum')
+            if val:
+                QMessageBox.about(Processos6, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        ####################################### SJF - TEMPO DE EXECUÇÃO ##############################################
+        elif TipoEscalonamento == 'SJF':
+            if Processos6.TipoDesempate.currentText() == 'FIFO':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularSJF(processos, 1), devs.GerarTabela(devs.calcularSJF(processos, 1), False), 'SJF', 'FIFO')
+                if val:
+                    QMessageBox.about(Processos6, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+            elif Processos6.TipoDesempate.currentText() == 'Por Prioridade':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE')
+                if val:
+                    QMessageBox.about(Processos6, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        ####################################### POR PRIORIDADE ##############################################
+        elif TipoEscalonamento == 'Por Prioridade': 
+            if Processos6.TipoDesempate.currentText() == 'FIFO':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularPorPrioridade(processos, 2), devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), False), 'POR PRIORIDADE', 'FIFO')
+                if val:
+                    QMessageBox.about(Processos6, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+            elif Processos6.TipoDesempate.currentText() == 'SJF':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF')
+                if val:
+                    QMessageBox.about(Processos6, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+    except ValueError:
+        QMessageBox.about(Processos6, "Error Detectado", "Não foi possível salvar este modelo.\n\nVerifique se não existe campos vazios.")
+
 ####################################### 6 PROCESSOS ##############################################
 def GerarCrit7(index):
     if Processos7.TipoEscala.currentText() == 'SJF':
@@ -436,6 +618,46 @@ def LimparCampos7():
     Processos7.TempoExecucao_7.setText("")
     Processos7.OrdemChegada_7.setText("")
     Processos7.Prioridade_7.setText("")
+
+def GerarRel7():
+    TipoEscalonamento = Processos7.TipoEscala.currentText()
+    try:
+        processos = [
+            ('P1', int(Processos7.TempoExecucao_1.text()), int(Processos7.OrdemChegada_1.text()), int(Processos7.Prioridade_1.text())),
+            ('P2', int(Processos7.TempoExecucao_2.text()), int(Processos7.OrdemChegada_2.text()), int(Processos7.Prioridade_2.text())),
+            ('P3', int(Processos7.TempoExecucao_3.text()), int(Processos7.OrdemChegada_3.text()), int(Processos7.Prioridade_3.text())),
+            ('P4', int(Processos7.TempoExecucao_4.text()), int(Processos7.OrdemChegada_4.text()), int(Processos7.Prioridade_4.text())),
+            ('P5', int(Processos7.TempoExecucao_5.text()), int(Processos7.OrdemChegada_5.text()), int(Processos7.Prioridade_5.text())),
+            ('P6', int(Processos7.TempoExecucao_6.text()), int(Processos7.OrdemChegada_6.text()), int(Processos7.Prioridade_6.text())),
+            ('P7', int(Processos7.TempoExecucao_7.text()), int(Processos7.OrdemChegada_7.text()), int(Processos7.Prioridade_7.text()))           
+            ]
+        if TipoEscalonamento == 'FIFO':
+            val = GerarDocumento.GerarRelatorio(processos, devs.calcularFIFO(processos), devs.GerarTabela(devs.calcularFIFO(processos), False), 'FIFO', 'Nenhum')
+            if val:
+                QMessageBox.about(Processos7, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        ####################################### SJF - TEMPO DE EXECUÇÃO ##############################################
+        elif TipoEscalonamento == 'SJF':
+            if Processos7.TipoDesempate.currentText() == 'FIFO':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularSJF(processos, 1), devs.GerarTabela(devs.calcularSJF(processos, 1), False), 'SJF', 'FIFO')
+                if val:
+                    QMessageBox.about(Processos7, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+            elif Processos7.TipoDesempate.currentText() == 'Por Prioridade':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE')
+                if val:
+                    QMessageBox.about(Processos7, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        ####################################### POR PRIORIDADE ##############################################
+        elif TipoEscalonamento == 'Por Prioridade': 
+            if Processos7.TipoDesempate.currentText() == 'FIFO':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularPorPrioridade(processos, 2), devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), False), 'POR PRIORIDADE', 'FIFO')
+                if val:
+                    QMessageBox.about(Processos7, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+            elif Processos7.TipoDesempate.currentText() == 'SJF':
+                val = GerarDocumento.GerarRelatorio(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF')
+                if val:
+                    QMessageBox.about(Processos7, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+    except ValueError:
+        QMessageBox.about(Processos7, "Error Detectado", "Não foi possível salvar este modelo.\n\nVerifique se não existe campos vazios.")
+
 ################################### CARREGAR PROCESSOS #########################################
 def carregarprocessos():
     valor = int(SelectProcess.process.currentText())
@@ -594,36 +816,40 @@ if __name__ == '__main__':
     Processos2.GerarRandom.triggered.connect(GerarNum2)
     Processos2.TipoEscala.activated.connect(GerarCrit2)
     Processos2.LimparCampos.triggered.connect(LimparCampos2)
+    Processos2.GerarRelatorio.clicked.connect(GerarRel2)
     #################### 3 PROCESSOS ##########################################
     Processos3 = uic.loadUi("Processos3.ui")
     Processos3.GerarTabela.clicked.connect(GerarTabela3)
     Processos3.GerarRandom.triggered.connect(GerarNum3)
     Processos3.TipoEscala.activated.connect(GerarCrit3)
-    Processos3.LimparCampos.triggered.connect(LimparCampos3)
+    Processos3.GerarRelatorio.clicked.connect(GerarRel3)
     #################### 4 PROCESSOS ##########################################
     Processos4 = uic.loadUi("Processos4.ui")
     Processos4.GerarTabela.clicked.connect(GerarTabela4)
     Processos4.GerarRandom.triggered.connect(GerarNum4)
     Processos4.TipoEscala.activated.connect(GerarCrit4)
-    Processos4.LimparCampos.triggered.connect(LimparCampos4)
+    Processos4.GerarRelatorio.clicked.connect(GerarRel4)
     #################### 5 PROCESSOS ##########################################
     Processos5 = uic.loadUi("Processos5.ui")
     Processos5.GerarTabela.clicked.connect(GerarTabela5)
     Processos5.GerarRandom.triggered.connect(GerarNum5)
     Processos5.TipoEscala.activated.connect(GerarCrit5)
     Processos5.LimparCampos.triggered.connect(LimparCampos5)
+    Processos5.GerarRelatorio.clicked.connect(GerarRel5)
     #################### 6 PROCESSOS ##########################################
     Processos6 = uic.loadUi("Processos6.ui")
     Processos6.GerarTabela.clicked.connect(GerarTabela6)
     Processos6.GerarRandom.triggered.connect(GerarNum6)
     Processos6.TipoEscala.activated.connect(GerarCrit6)
     Processos6.LimparCampos.triggered.connect(LimparCampos6)
+    Processos6.GerarRelatorio.clicked.connect(GerarRel6)
     #################### 7 PROCESSOS ##########################################
     Processos7 = uic.loadUi("Processos7.ui")
     Processos7.GerarTabela.clicked.connect(GerarTabela7)
     Processos7.GerarRandom.triggered.connect(GerarNum7)
     Processos7.TipoEscala.activated.connect(GerarCrit7)
     Processos7.LimparCampos.triggered.connect(LimparCampos7)
+    Processos7.GerarRelatorio.clicked.connect(GerarRel7)
     ################### Seleção Processos #####################################
     SelectProcess = uic.loadUi("ProcessosSelect.ui")
     SelectProcess.LoadProcess.clicked.connect(carregarprocessos)

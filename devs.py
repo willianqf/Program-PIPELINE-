@@ -4,6 +4,9 @@ import io
 from docx import Document
 #import pandas as pd
 import numpy as np
+import GerarDocumento
+import datetime
+
 
 
 #processos = [('P1', 15, 1, 4),('P2',20, 2, 3),('P3', 20, 3, 1),('P4', 45, 4, 2)]
@@ -139,7 +142,7 @@ def CriarTabela(processos, inicio, fim):
     ps.grid(True) #Deixar tabelado
     ps.show()
 
-def GerarTabela(valor, exibir: bool): #Gera Tabela de Gantt e retorna os valores 
+def GerarTabela(valor, exibir: bool): #Gera Tabela de Gantt e retorna os valores
     p = valor
     xini = valor[1]#p[1]
     xfim = valor[3]
@@ -160,7 +163,7 @@ def GerarTabela(valor, exibir: bool): #Gera Tabela de Gantt e retorna os valores
         fim.append(x[2])
     if exibir == True:
         CriarTabela(processos, inicio, fim)
-    return processos, inicio, fim, tempototal
+    return processos, inicio, fim, tempototal, valor[6] 
     '''
     # VARIAVEIS DE CONSTRUÇÃO DO GRÁFICO
     y = valor[5] # PROCESSOS DA TABELA Y
@@ -180,3 +183,4 @@ def GerarTabela(valor, exibir: bool): #Gera Tabela de Gantt e retorna os valores
     '''
 #test()
 
+#GerarDocumento.GerarDocumento(processos, calcularFIFO(processos), GerarTabela(calcularFIFO(processos), False), 'FIFO', 'Nenhum')

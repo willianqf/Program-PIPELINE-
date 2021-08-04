@@ -98,6 +98,9 @@ border-right-color: rgb(126, 126, 126);</string>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(255, 255, 255);</string>
     </property>
+    <property name="text">
+     <string>WILLIANQUIRINO\SQLEXPRESS</string>
+    </property>
    </widget>
    <widget class="QLabel" name="label_1">
     <property name="geometry">

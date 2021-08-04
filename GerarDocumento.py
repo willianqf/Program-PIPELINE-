@@ -5,64 +5,109 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH #Define alinhamento de paragráfo
 from docx.shared import Pt #Define tamanho da fonte
 from docx.shared import RGBColor #Define a cor da fonte
 from docx.shared import Inches #Define tamanho
+from typing import Counter
+import matplotlib.pyplot as ps
+import numpy as np
+import os
+from tkinter import filedialog
+from tkinter import *
+from datetime import date
+import random
+from PyQt5 import uic, QtWidgets, QtCore
+from PyQt5.QtWidgets import QMessageBox, QWidget
 
-stre = 'FIFO'
+'''
+numprocessos = 6
 valor = {
     "Titulo":"Calculo de Escalonamento de Processos",
     "Informações": [
         {
-            "Test1":"Processo realizado: \nBase de Calculo: ",
-            "Texto":"Aqui vai um texto",
+            "TipoProcesso":"Processo selecionado: "+str(stre),
+            "NumProcessos":str(numprocessos)+" Processos",
             "Image":"PipesTransparent.png",
             "Table":["A","b","c"],
         }
     ]
 }
-def GerarDocumento():
-    documento = Document()
-    documento.add_heading("Titulo Atribuido", 0) #Definir Titulo ('Titulo', (peso))
-    documento.add_paragraph("Adiciona um paragrafo no documento")
-    documento.save("NomeDoDocumento.docx") #Salva o documento no local do script
+'''
+def GerarRelatorio(processos, valuecalcu, gerartabela, tipoprocesso, tipocriterio) -> bool:
+    """[summary]
 
+    Args:
+        processos ([type]): [A variável Processos precisa ser carregada]
+        valuecalcu ([type]): [O calculo de escalonamento]
+        gerartabela ([type]): [GerarTabela(Calculo de escalonamento(com processo), False)]
+        tipoprocesso ([type]): [FIFO / SJF / Por Prioridade]
+        tipocriterio ([type]): [Nenhum / FIFO / SJF / Por Prioridade]
+    """
+    salvou = False
+    valor = gerartabela
+    # VARIAVEIS DE CONSTRUÇÃO DO GRÁFICO
+    y = valor[0] # PROCESSOS DA TABELA Y
+    c = []  # TIPO USADO (quantidade de processos)
+    for x in y:
+        c.append(1)
+    xinicio = valor[1] #Inicio processo
+    xfim = valor[2] # Fim processo
+    color_mapper = np.vectorize(lambda x: {0: 'red', 1: 'blue'}.get(x))
+    ps.hlines(y, xinicio, xfim, colors=color_mapper(c), lw=25)
+    ps.ylabel('PROCESSOS')
+    ps.xlabel('Tempo de Execução (ns)')
+    ps.grid(True) #Deixar tabelado
+    ps.savefig('image.png')
 
-document = Document()
-styles = document.styles
+    docum = Document()
 
-# Style Paragraph
-p = styles.add_style("Paragraph", WD_STYLE_TYPE.PARAGRAPH)
-p.font.name = "Calibri"
-p.font.size = Pt(11)
+    docum.add_heading('Relatório: Cálculo de Escalonamento', 0)
+    docum.add_heading('Tipo de escalonamento: {0}\nCritério de Desempate: {1}'.format(tipoprocesso, tipocriterio))
+    styles = docum.styles
+    # Style Paragraph
+    p = styles.add_style("Paragraph", WD_STYLE_TYPE.PARAGRAPH)
+    p.font.name = "Calibri"
+    p.font.size = Pt(11)
+    #Style Heading 2
+    h2 = styles.add_style("H2", WD_STYLE_TYPE.PARAGRAPH)
+    h2.font.name = "Calisto MT"
+    h2.font.size = Pt(12)
+    h2.font.bold = True #Define se vai ser negrito ou não
+    #Style Heading 3
+    h3 = styles.add_style("H3", WD_STYLE_TYPE.PARAGRAPH)
+    h3.font.name = "Calisto MT"
+    h3.font.size = Pt(10)
+    h3.font.color.rgb = RGBColor(11, 0x0A, 0x6A) ##110A6A
+    h3.font.bold = False #Define se vai ser negrito ou não
 
-#Style Heading 2
-h2 = styles.add_style("H2", WD_STYLE_TYPE.PARAGRAPH)
-h2.font.name = "Calibri"
-h2.font.size = Pt(13)
-h2.font.color.rgb = RGBColor(79, 129, 189)
-h2.font.bold = False #Define se vai ser negrito ou não
+    tabela = docum.add_table(rows = len(processos)+1, cols = 4, style='Table Grid')
+    Format = tabela.rows[0].cells
+    Format[0].text = 'Processos'
+    Format[1].text = 'Tempo de Execução'
+    Format[2].text= 'Ordem de Chegada'
+    Format[3].text= 'Prioridade'
+    tabela.aligment = WD_TABLE_ALIGNMENT.CENTER
+    for x in range(1, len(processos)+1):
+        Format = tabela.rows[x].cells
+        Format[0].text = str(processos[x-1][0])
+        Format[1].text = str(processos[x-1][1])
+        Format[2].text = str(processos[x-1][2])
+        Format[3].text = str(processos[x-1][3])
+    docum.add_picture('image.png', width=Inches(4))
+    val = 0
+    for x in y:
+        docum.add_paragraph('Tempo de Espera do Processo '+str(x)+': '+str(xinicio[val])+' NanosSegundos', style="H3")
+        val+=1
+    docum.add_paragraph('Tempo médio de espera: {0:.2f} ns'.format(valuecalcu[4]), style="H2")
+    docum.add_paragraph('Tempo Total: {0:.2f} ns'.format(valuecalcu[2]), style="H2")
+    Diretorio = Tk()
+    try:
+        Diretorio.withdraw()
+        DiretorioSelecionado = filedialog.askdirectory()
+        data = str(date.today())
+        codigorandom = str(random.randrange(6000, 9999))
+        docum.save(DiretorioSelecionado+'/RelatorioPIPE-'+data+'-'+codigorandom+'.docx')
+        salvou = True
+    except Exception:
+        salvou = False
+    os.remove('image.png')
+    ps.close()
+    return salvou
 
-#Style Heading 3
-h3 = styles.add_style("H3", WD_STYLE_TYPE.PARAGRAPH)
-h3.font.name = "Calibri"
-h3.font.size = Pt(12)
-h3.font.color.rgb = RGBColor(79, 129, 189)
-h3.font.bold = False #Define se vai ser negrito ou não
-
-document.add_heading(valor.get('Titulo'), 0)
-for var in valor.get('Informações'):
-    document.add_picture(var.get("Image"), width=Inches(1.25))
-    document.add_paragraph(var.get("Table"), style="H3")
-    document.add_paragraph(var.get("Test1"), style="H2")
-    document.add_paragraph(var.get("Text"), style="Paragraph")
-    document.add_paragraph(var.get("Image"), style="H3")
-    table = document.add_table(rows = 1, cols=3, style="Table Grid") #CRIA UMA TABELA (row = linhas, cols = colunas, formatação)
-    table.aligment = WD_TABLE_ALIGNMENT.CENTER #Define tipo de alinhamento
-    table.autofit = False #Define espaçamento (Verdadeiro ou Falso)
-    hdr_cells = table.rows[0].cells
-    hdr_cells[0].text = "col1"
-    hdr_cells[1].text = "col2"
-    hdr_cells[2].text = "col3"
-    row_cells = table.add_row().cells
-    for index, var2 in enumerate(var.get("Table")):
-        row_cells[index].text = var2
-
-document.save("SavarDados.docx")

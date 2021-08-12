@@ -4,7 +4,6 @@ import io
 from docx import Document
 #import pandas as pd
 import numpy as np
-import GerarDocumento
 import datetime
 
 

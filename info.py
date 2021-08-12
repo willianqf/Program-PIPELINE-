@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QMessageBox
 import devs 
 import pyodbc
 import GerarDocumento
+import os
 
 ConnectServer: bool = False
 NomeServer: str
@@ -658,6 +659,47 @@ def GerarRel7():
     except ValueError:
         QMessageBox.about(Processos7, "Error Detectado", "Não foi possível salvar este modelo.\n\nVerifique se não existe campos vazios.")
 
+def GerarSQL7():
+    TipoEscalonamento = Processos7.TipoEscala.currentText()
+    if ConnectServer == True:
+        try:
+            processos = [
+                ('P1', int(Processos7.TempoExecucao_1.text()), int(Processos7.OrdemChegada_1.text()), int(Processos7.Prioridade_1.text())),
+                ('P2', int(Processos7.TempoExecucao_2.text()), int(Processos7.OrdemChegada_2.text()), int(Processos7.Prioridade_2.text())),
+                ('P3', int(Processos7.TempoExecucao_3.text()), int(Processos7.OrdemChegada_3.text()), int(Processos7.Prioridade_3.text())),
+                ('P4', int(Processos7.TempoExecucao_4.text()), int(Processos7.OrdemChegada_4.text()), int(Processos7.Prioridade_4.text())),
+                ('P5', int(Processos7.TempoExecucao_5.text()), int(Processos7.OrdemChegada_5.text()), int(Processos7.Prioridade_5.text())),
+                ('P6', int(Processos7.TempoExecucao_6.text()), int(Processos7.OrdemChegada_6.text()), int(Processos7.Prioridade_6.text())),
+                ('P7', int(Processos7.TempoExecucao_7.text()), int(Processos7.OrdemChegada_7.text()), int(Processos7.Prioridade_7.text()))           
+                ]
+            if TipoEscalonamento == 'FIFO':
+                val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularFIFO(processos), devs.GerarTabela(devs.calcularFIFO(processos), False), 'FIFO', 'Nenhum')
+                if val:
+                    QMessageBox.about(Processos7, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        ####################################### SJF - TEMPO DE EXECUÇÃO ##############################################
+            elif TipoEscalonamento == 'SJF':
+                if Processos7.TipoDesempate.currentText() == 'FIFO':
+                    val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 1), devs.GerarTabela(devs.calcularSJF(processos, 1), False), 'SJF', 'FIFO')
+                    if val:
+                        QMessageBox.about(Processos7, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+            elif Processos7.TipoDesempate.currentText() == 'Por Prioridade':
+                val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE')
+                if val:
+                    QMessageBox.about(Processos7, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        ####################################### POR PRIORIDADE ##############################################
+            elif TipoEscalonamento == 'Por Prioridade': 
+                if Processos7.TipoDesempate.currentText() == 'FIFO':
+                    val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 2), devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), False), 'POR PRIORIDADE', 'FIFO')
+                    if val:
+                        QMessageBox.about(Processos7, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+            elif Processos7.TipoDesempate.currentText() == 'SJF':
+                val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF')
+                if val:
+                    QMessageBox.about(Processos7, "Arquivo Salvo", "Seu arquivo foi salvo com sucesso!")
+        except ValueError:
+            QMessageBox.about(Processos7, "Error Detectado", "Não foi possível salvar este modelo.\n\nVerifique se não existe campos vazios.")
+    else:
+        QMessageBox.about(Processos7, "Sem Conexão", "Você precisa estar conectado para salvar os dados no banco de dados!")
 ################################### CARREGAR PROCESSOS #########################################
 def carregarprocessos():
     valor = int(SelectProcess.process.currentText())
@@ -795,8 +837,24 @@ def DesconectarSQL():
 
 def CarregarPIPE():
     global ConnectServer
+    global NomeServer
+    global NomeBanco
     if ConnectServer == True:
-        print('Carregar PIPE')
+        print(os.getcwd())
+        '''
+            TESTAR BANCO DE DADOS
+        '''
+
+        conexao = conexaobanco(NomeServer, NomeBanco)
+        cursor = conexao.cursor()
+        cursor.execute("SELECT PDF_Pipe FROM BancoPipe WHERE ID_Pipe = 1")
+        val = cursor.fetchone()
+        if val:
+            for x in val:
+                doguinho = open('WillianTest.pdf', 'wb')
+                doguinho.write(x)
+                doguinho.close()
+                print("Linha1: "+str(x))
     else:
         QMessageBox.about(Main, "Conexão não realizada", "Você precisa estar com o banco conectado para realizar consultas!")
 
@@ -850,6 +908,7 @@ if __name__ == '__main__':
     Processos7.TipoEscala.activated.connect(GerarCrit7)
     Processos7.LimparCampos.triggered.connect(LimparCampos7)
     Processos7.GerarRelatorio.clicked.connect(GerarRel7)
+    Processos7.SalvarSQL.triggered.connect(GerarSQL7)
     ################### Seleção Processos #####################################
     SelectProcess = uic.loadUi("ProcessosSelect.ui")
     SelectProcess.LoadProcess.clicked.connect(carregarprocessos)

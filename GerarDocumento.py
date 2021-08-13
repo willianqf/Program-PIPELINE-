@@ -16,8 +16,10 @@ import random
 from PyQt5 import uic, QtWidgets, QtCore
 from PyQt5.QtWidgets import QMessageBox, QWidget
 from docx2pdf import convert
+from PyQt5.QtCore import Qt
 import devs
 import pyodbc
+
 
 '''
 numprocessos = 6
@@ -123,7 +125,7 @@ def GerarRelatorio(processos, valuecalcu, gerartabela, tipoprocesso, tipocriteri
     ps.close()
     return salvou
 
-def GerarRelatorioSQL(processos, valuecalcu, gerartabela, tipoprocesso, tipocriterio) -> bool:
+def GerarRelatorioSQL(processos, valuecalcu, gerartabela, tipoprocesso, tipocriterio, processo = None) -> bool:
     """[summary]
 
     Args:
@@ -135,6 +137,7 @@ def GerarRelatorioSQL(processos, valuecalcu, gerartabela, tipoprocesso, tipocrit
     """
     salvou = False
     valor = gerartabela
+    codigo = criarcodigo()
     # VARIAVEIS DE CONSTRUÇÃO DO GRÁFICO
     y = valor[0] # PROCESSOS DA TABELA Y
     c = []  # TIPO USADO (quantidade de processos)
@@ -190,6 +193,7 @@ def GerarRelatorioSQL(processos, valuecalcu, gerartabela, tipoprocesso, tipocrit
         val+=1
     docum.add_paragraph('Tempo médio de espera: {0:.2f} ns'.format(valuecalcu[4]), style="H2")
     docum.add_paragraph('Tempo Total: {0:.2f} ns'.format(valuecalcu[2]), style="H2")
+    docum.add_paragraph('Código do relatório: {0}'.format(codigo), style="H3")
     try:
         DiretorioSelecionado = os.getcwd()+'\SQLDate'
         dirfinaldocx = DiretorioSelecionado+'\RelatorioPIPESQL.docx'
@@ -208,13 +212,32 @@ def GerarRelatorioSQL(processos, valuecalcu, gerartabela, tipoprocesso, tipocrit
         arqpdf.close()
         valorbytes = b''.join(valor) #VARIÁVEL BYTE RESPONSÁVEL POR AMAZENAR DADOS NO SQL
 
-        con = conexaobanco('WILLIANQUIRINO\SQLEXPRESS', 'PIPESQL')
-        cursor = con.cursor()
-        string = 'Apenas Test'
-        cursor.execute("INSERT INTO BancoPipe(COD_Pipe, PDF_Pipe) VALUES(?, ?)", (string, valorbytes)) 
-        cursor.commit()
-        cursor.close()
+        msq = QMessageBox()
+        msq.setWindowTitle("Salvar Dados") #Define o titulo
+        msq.setText('Você está prestes a salvar este dado no banco!') #Define descrição
+        msq.setInformativeText("\nDeseja mesmo salvar?") #Define descrição secundária
+        msq.setIcon(QMessageBox.Warning) #Abre mensagem de atenção
+        msq.setStandardButtons(QMessageBox.Yes|QMessageBox.Cancel) #Criar opções de click na mensagem
+        resposta = msq.exec_()
+        if resposta == QMessageBox.Yes:
+            try:
+                con = conexaobanco('WILLIANQUIRINO\SQLEXPRESS', 'PIPESQL')
+                cursor = con.cursor()
+                cursor.execute("INSERT INTO BancoPipe(COD_Pipe, PDF_Pipe) VALUES(?, ?)", (codigo, valorbytes)) 
+                cursor.commit()
+                cursor.close()
 
+                msq2 = QMessageBox()
+                msq2.setWindowTitle("Dados Salvos") #Define o titulo
+                msq2.setText('O seu dado está salvo com sucesso\nNúmero de protocolo: {0}\n\nSalve o seu número de protocolo para acessa-lo posteriormente!'.format(codigo)) #Define descrição
+                #msq2.setInformativeText("\nDeseja mesmo salvar?") #Define descrição secundária
+                msq2.setIcon(QMessageBox.Information) #Abre mensagem de atenção
+                msq2.setTextInteractionFlags(Qt.TextSelectableByMouse) # PERMITE SELECIONAR O TEXTO NO MESSAGEBOX
+                msq2.exec_()
+                #QMessageBox.about(processo, "Dados Salvo com Sucesso", "Esse relatório foi salvo com sucesso\n\nO código do relatório é: {0}\nSalve o código para poder acessa-lo novamente!".format(codigo))
+            except Exception as er:
+                QMessageBox.about(processo, "Erro ao Salvar", "Não foi possível salvar este dado ao banco\n\nContate o desenvolvedor\nError: {0}".format(er))
+   
         '''
         doguinho = open('FUNCIONACARALHO.pdf', 'wb')
         doguinho.write(valorbytes)
@@ -229,6 +252,19 @@ def GerarRelatorioSQL(processos, valuecalcu, gerartabela, tipoprocesso, tipocrit
     ps.close()
     return salvou
 
+def criarcodigo() -> str:
+    con = conexaobanco('WILLIANQUIRINO\SQLEXPRESS', 'PIPESQL')
+    cursor = con.cursor()
+    cursor.execute("SELECT max(ID_Pipe) from BancoPipe")
+    row = cursor.fetchone()
+    value: str
+    for x in row:
+        value = str(x)
+    letras = 'abcdefghkijlmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVXWYZ123456789'
+    for x in range(22):
+        value += letras[random.randrange(0, len(letras))]
+    return value
+'''
 processos = [
     ('P1', 13, 1, 17),
     ('P2', 54, 2, 26),
@@ -239,4 +275,5 @@ processos = [
     ('P7', 3, 7, 105)           
 ]
 valor = GerarRelatorioSQL(processos, devs.calcularFIFO(processos), devs.GerarTabela(devs.calcularFIFO(processos), False), 'FIFO', 'Nenhum')
+'''
 

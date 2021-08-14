@@ -4,7 +4,9 @@ from PyQt5.QtWidgets import QMessageBox
 import devs 
 import pyodbc
 import GerarDocumento
-import os
+from tkinter import filedialog
+from tkinter import *
+
 
 ConnectServer: bool = False
 NomeServer: str
@@ -113,14 +115,14 @@ def GerarSQL2():
             elif TipoEscalonamento == 'SJF':
                 if Processos2.TipoDesempate.currentText() == 'FIFO':
                     val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 1), devs.GerarTabela(devs.calcularSJF(processos, 1), False), 'SJF', 'FIFO', Processos2)
-            elif Processos2.TipoDesempate.currentText() == 'Por Prioridade':
-                val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE', Processos2)
+                elif Processos2.TipoDesempate.currentText() == 'Por Prioridade':
+                    val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE', Processos2)
         ####################################### POR PRIORIDADE ##############################################
             elif TipoEscalonamento == 'Por Prioridade': 
                 if Processos2.TipoDesempate.currentText() == 'FIFO':
                     val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 2), devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), False), 'POR PRIORIDADE', 'FIFO', Processos2)
-            elif Processos2.TipoDesempate.currentText() == 'SJF':
-                val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF', Processos2)
+                elif Processos2.TipoDesempate.currentText() == 'SJF':
+                    val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF', Processos2)
         except ValueError:
             QMessageBox.about(Processos2, "Error Detectado", "Não foi possível salvar este modelo.\n\nVerifique se não existe campos vazios.")
     else:
@@ -237,14 +239,14 @@ def GerarSQL3():
             elif TipoEscalonamento == 'SJF':
                 if Processos3.TipoDesempate.currentText() == 'FIFO':
                     val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 1), devs.GerarTabela(devs.calcularSJF(processos, 1), False), 'SJF', 'FIFO', Processos3)
-            elif Processos3.TipoDesempate.currentText() == 'Por Prioridade':
-                val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE', Processos3)
+                elif Processos3.TipoDesempate.currentText() == 'Por Prioridade':
+                    val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE', Processos3)
         ####################################### POR PRIORIDADE ##############################################
             elif TipoEscalonamento == 'Por Prioridade': 
                 if Processos3.TipoDesempate.currentText() == 'FIFO':
                     val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 2), devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), False), 'POR PRIORIDADE', 'FIFO', Processos3)
-            elif Processos3.TipoDesempate.currentText() == 'SJF':
-                val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF', Processos3)
+                elif Processos3.TipoDesempate.currentText() == 'SJF':
+                    val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF', Processos3)
         except ValueError:
             QMessageBox.about(Processos3, "Error Detectado", "Não foi possível salvar este modelo.\n\nVerifique se não existe campos vazios.")
     else:
@@ -512,14 +514,14 @@ def GerarSQL5():
             elif TipoEscalonamento == 'SJF':
                 if Processos5.TipoDesempate.currentText() == 'FIFO':
                     val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 1), devs.GerarTabela(devs.calcularSJF(processos, 1), False), 'SJF', 'FIFO', Processos5)
-            elif Processos5.TipoDesempate.currentText() == 'Por Prioridade':
-                val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE', Processos5)
+                elif Processos5.TipoDesempate.currentText() == 'Por Prioridade':
+                    val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE', Processos5)
         ####################################### POR PRIORIDADE ##############################################
             elif TipoEscalonamento == 'Por Prioridade': 
                 if Processos5.TipoDesempate.currentText() == 'FIFO':
                     val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 2), devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), False), 'POR PRIORIDADE', 'FIFO', Processos5)
-            elif Processos5.TipoDesempate.currentText() == 'SJF':
-                val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF', Processos5)
+                elif Processos5.TipoDesempate.currentText() == 'SJF':
+                    val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF', Processos5)
         except ValueError:
             QMessageBox.about(Processos5, "Error Detectado", "Não foi possível salvar este modelo.\n\nVerifique se não existe campos vazios.")
     else:
@@ -663,14 +665,14 @@ def GerarSQL6():
             elif TipoEscalonamento == 'SJF':
                 if Processos6.TipoDesempate.currentText() == 'FIFO':
                     val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 1), devs.GerarTabela(devs.calcularSJF(processos, 1), False), 'SJF', 'FIFO', Processos6)
-            elif Processos6.TipoDesempate.currentText() == 'Por Prioridade':
-                val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE', Processos6)
+                elif Processos6.TipoDesempate.currentText() == 'Por Prioridade':
+                    val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE', Processos6)
         ####################################### POR PRIORIDADE ##############################################
             elif TipoEscalonamento == 'Por Prioridade': 
                 if Processos6.TipoDesempate.currentText() == 'FIFO':
                     val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 2), devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), False), 'POR PRIORIDADE', 'FIFO', Processos6)
-            elif Processos6.TipoDesempate.currentText() == 'SJF':
-                val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF', Processos6)
+                elif Processos6.TipoDesempate.currentText() == 'SJF':
+                    val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF', Processos6)
         except ValueError:
             QMessageBox.about(Processos6, "Error Detectado", "Não foi possível salvar este modelo.\n\nVerifique se não existe campos vazios.")
     else:
@@ -823,14 +825,14 @@ def GerarSQL7():
             elif TipoEscalonamento == 'SJF':
                 if Processos7.TipoDesempate.currentText() == 'FIFO':
                     val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 1), devs.GerarTabela(devs.calcularSJF(processos, 1), False), 'SJF', 'FIFO', Processos7)
-            elif Processos7.TipoDesempate.currentText() == 'Por Prioridade':
-                val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE', Processos7)
+                elif Processos7.TipoDesempate.currentText() == 'Por Prioridade':
+                    val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularSJF(processos, 2), devs.GerarTabela(devs.calcularSJF(processos, 2), False), 'SJF', 'POR PRIORIDADE', Processos7)
         ####################################### POR PRIORIDADE ##############################################
             elif TipoEscalonamento == 'Por Prioridade': 
                 if Processos7.TipoDesempate.currentText() == 'FIFO':
                     val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 2), devs.GerarTabela(devs.calcularPorPrioridade(processos, 2), False), 'POR PRIORIDADE', 'FIFO', Processos7)
-            elif Processos7.TipoDesempate.currentText() == 'SJF':
-                val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF', Processos7)
+                elif Processos7.TipoDesempate.currentText() == 'SJF':
+                    val = GerarDocumento.GerarRelatorioSQL(processos, devs.calcularPorPrioridade(processos, 1), devs.GerarTabela(devs.calcularPorPrioridade(processos, 1), False), 'POR PRIORIDADE', 'SJF', Processos7)
         except ValueError:
             QMessageBox.about(Processos7, "Error Detectado", "Não foi possível salvar este modelo.\n\nVerifique se não existe campos vazios.")
     else:
@@ -967,6 +969,7 @@ def DesconectarSQL():
             NomeServer = ""
             NomeBanco = ""
             QMessageBox.about(Main, "Banco Desconectado", "Você foi desconectado ao banco:\n\n"+banco)
+            SQLAccess.close()
     else:
         QMessageBox.about(Main, "Sem Conexão", "Você ainda não está conectado a nenhum banco")
 
@@ -975,11 +978,12 @@ def CarregarPIPE():
     global NomeServer
     global NomeBanco
     if ConnectServer == True:
-        print(os.getcwd())
+        SQLAccess.show()
+        #print(os.getcwd()) #Pega o diretório atual do programa
         '''
             TESTAR BANCO DE DADOS
         '''
-
+        '''
         conexao = conexaobanco(NomeServer, NomeBanco)
         cursor = conexao.cursor()
         cursor.execute("SELECT PDF_Pipe FROM BancoPipe WHERE COD_Pipe = '3iDeD2dj8CyzkN6FX5C3Z31'")
@@ -990,9 +994,118 @@ def CarregarPIPE():
                 doguinho.write(x)
                 doguinho.close()
                 print("Linha1: "+str(x))
+        '''
     else:
         QMessageBox.about(Main, "Conexão não realizada", "Você precisa estar com o banco conectado para realizar consultas!")
+############################### SQL ACCESS ############################################################
+def deletar(valor):
+    global NomeBanco
+    global NomeServer
+    msq = QMessageBox()
+    msq.setWindowTitle("Deletar Arquivo") #Define o titulo
+    msq.setText('Você está prestes a deletar o arquivo do sistema!\nCódigo do Arquivo: {0}\n'.format(valor)) #Define descrição
+    msq.setInformativeText("\nDeseja mesmo Deletar?") #Define descrição secundária
+    msq.setIcon(QMessageBox.Warning) #Abre mensagem de atenção
+    msq.setStandardButtons(QMessageBox.Yes|QMessageBox.Cancel) #Criar opções de click na mensagem
+    resposta = msq.exec_()
+    if resposta == QMessageBox.Yes:
+        conexao = conexaobanco(NomeServer, NomeBanco)
+        cursor = conexao.cursor()
+        cursor.execute("DELETE FROM BancoPipe WHERE COD_Pipe = '{0}'".format(valor))
+        cursor.close()
+        QMessageBox.about(SQLview, "Deletado com Sucesso", "O arquivo do banco foi apagado do banco com sucesso!")
 
+def download(valor):
+    global NomeBanco
+    global NomeServer
+    Diretorio = Tk()
+    Diretorio.withdraw()
+    DiretorioSelecionado = filedialog.askdirectory()
+    print(DiretorioSelecionado)
+    conexao = conexaobanco(NomeServer, NomeBanco)
+    cursor = conexao.cursor()
+    cursor.execute("SELECT PDF_Pipe FROM BancoPipe WHERE COD_Pipe = '{0}'".format(valor))
+    val = cursor.fetchone()
+    if val:
+        for x in val:
+            doguinho = open(DiretorioSelecionado+'\PIPE-Code-'+valor+'.pdf', 'wb')
+            doguinho.write(x)
+            doguinho.close()
+            if DiretorioSelecionado:
+                QMessageBox.about(SQLview, "Dado Concluido", "O arquivo foi transferido para o diretório especificado!")
+    
+def ListarDados():
+    conexao = conexaobanco(NomeServer, NomeBanco)
+    cursor = conexao.cursor()
+    cursor.execute("SELECT COD_Pipe FROM BancoPipe")
+    val = cursor.fetchall()
+    SQLview.tabela.setRowCount(len(val))
+    SQLview.tabela.setColumnCount(3)
+    for x in range(0, len(val)):
+        for y in range(1):
+            codigo = str(val[x][y])
+            botaoDel = QtWidgets.QPushButton('Deletar')
+            botaoDel.setStyleSheet('QPushButton {background-color:#A60100; font:bold; font-size:10px}')
+            botaoDow = QtWidgets.QPushButton('Baixar')
+            botaoDow.setStyleSheet('QPushButton {background-color:#0FB328; font:bold; font-size:10px}')
+            #botaoDel.clicked.connect(test)
+            #botaoDel.clicked.connect(lambda: deletar('{0}'.format(SQLview.tabela.item(x, y).text())))
+            #botaoDel.clicked.connect(lambda: deletar('{0}'.format(SQLview.tabela.item(x, y).text())))
+            #botaoDel.clicked.connect(lambda who=str(codigo+""): deletar(who))
+            botaoDel.clicked.connect (lambda state, x = codigo: deletar(x))
+            botaoDow.clicked.connect (lambda state, x = codigo: download(x))
+            SQLview.tabela.setItem(x, y, QtWidgets.QTableWidgetItem(codigo))
+            SQLview.tabela.setCellWidget(x, 1, botaoDel)
+            SQLview.tabela.setCellWidget(x, 2, botaoDow)
+            header = SQLview.tabela.horizontalHeader()       
+            header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+            header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+            header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+    SQLview.show()
+
+def AcessarCodigo():
+    SQLcodigo.show()
+
+def Pesquisar():
+    valor = SQLcodigo.PesquisarTexto.text()
+    SQLcodigo.PesquisarTexto.setText('')
+    try:
+        conexao = conexaobanco(NomeServer, NomeBanco)
+        cursor = conexao.cursor()
+        cursor.execute("SELECT COD_Pipe FROM BancoPipe WHERE COD_Pipe = '{0}'".format(valor))
+        val = cursor.fetchall()
+        if val:
+            SQLcodigo.tabela.setRowCount(len(val))
+            SQLcodigo.tabela.setColumnCount(3)
+            for x in range(0, len(val)):
+                for y in range(1):
+                    codigo = str(val[x][y])
+                    botaoDel = QtWidgets.QPushButton('Deletar')
+                    botaoDel.setStyleSheet('QPushButton {background-color:#A60100; font:bold; font-size:10px}')
+                    botaoDow = QtWidgets.QPushButton('Baixar')
+                    botaoDow.setStyleSheet('QPushButton {background-color:#0FB328; font:bold; font-size:10px}')
+                    #botaoDel.clicked.connect(test)
+                    #botaoDel.clicked.connect(lambda: deletar('{0}'.format(SQLview.tabela.item(x, y).text())))
+                    #botaoDel.clicked.connect(lambda: deletar('{0}'.format(SQLview.tabela.item(x, y).text())))
+                    #botaoDel.clicked.connect(lambda who=str(codigo+""): deletar(who))
+                    botaoDel.clicked.connect (lambda state, x = codigo: deletar(x))
+                    botaoDow.clicked.connect (lambda state, x = codigo: download(x))
+                    SQLcodigo.tabela.setItem(x, y, QtWidgets.QTableWidgetItem(codigo))
+                    SQLcodigo.tabela.setCellWidget(x, 1, botaoDel)
+                    SQLcodigo.tabela.setCellWidget(x, 2, botaoDow)
+                    header = SQLcodigo.tabela.horizontalHeader()       
+                    header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+                    header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+                    header.setSectionResizeMode(2, QtWidgets.QHeaderView.ResizeToContents)
+        else:
+            QMessageBox.about(SQLcodigo, "Informações do Banco", "A sua busca não retornou nenhum dado")
+    except Exception:
+        QMessageBox.about(SQLcodigo, "Erro SQL", "Houve um erro ao fazer a consulta para o SQL")
+def InfoBanco():
+    global ConnectServer
+    global NomeServer
+    global NomeBanco 
+    QMessageBox.about(SQLAccess, "Informações do Banco", "Você está conectado ao SQL\n{0}\n\nStatus de conexão: {1}\nNome do Banco: {2}".format(NomeServer, 'Connectado' if ConnectServer else 'Desconectado', NomeBanco))
 #####################################################################################################
 if __name__ == '__main__':
     Aplicativo = QtWidgets.QApplication([]) #Usar via .ui
@@ -1023,6 +1136,7 @@ if __name__ == '__main__':
     Processos4.GerarTabela.clicked.connect(GerarTabela4)
     Processos4.GerarRandom.triggered.connect(GerarNum4)
     Processos4.TipoEscala.activated.connect(GerarCrit4)
+    Processos4.GerarRelatorio.clicked.connect(GerarRel4)
     Processos4.SalvarSQL.triggered.connect(GerarSQL4)
     #################### 5 PROCESSOS ##########################################
     Processos5 = uic.loadUi("Processos5.ui")
@@ -1051,6 +1165,15 @@ if __name__ == '__main__':
     ################### Seleção Processos #####################################
     SelectProcess = uic.loadUi("ProcessosSelect.ui")
     SelectProcess.LoadProcess.clicked.connect(carregarprocessos)
+    ################### ACESSAR SQL ###########################################
+    SQLAccess = uic.loadUi("SQLAccess.ui")
+    SQLview = uic.loadUi("SQLview.ui")
+    SQLcodigo = uic.loadUi("SQLcodigo.ui")
+    SQLcodigo.Pesquisar.clicked.connect(Pesquisar)
+    SQLAccess.ListarDados.clicked.connect(ListarDados)
+    SQLAccess.AcessarCodigo.clicked.connect(AcessarCodigo)
+    SQLAccess.DesconectarBanco.triggered.connect(DesconectarSQL)
+    SQLAccess.InfoBanco.triggered.connect(InfoBanco)
     ####################    Main    ###########################################
     Main = uic.loadUi("Main.ui")
     Main.AbrirProcesso.clicked.connect(abrirselect)

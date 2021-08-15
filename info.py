@@ -1012,9 +1012,10 @@ def deletar(valor):
         conexao = conexaobanco(NomeServer, NomeBanco)
         cursor = conexao.cursor()
         cursor.execute("DELETE FROM BancoPipe WHERE COD_Pipe = '{0}'".format(valor))
-        cursor.close()
+        cursor.commit()
         QMessageBox.about(SQLview, "Deletado com Sucesso", "O arquivo do banco foi apagado do banco com sucesso!")
-
+        ListarDados()
+        
 def download(valor):
     global NomeBanco
     global NomeServer

@@ -15,10 +15,11 @@ from datetime import date
 import random
 from PyQt5 import uic, QtWidgets, QtCore
 from PyQt5.QtWidgets import QMessageBox, QWidget
-from docx2pdf import convert
+import docx2pdf
+#import win32com.client
 from PyQt5.QtCore import Qt
-import devs
 import pyodbc
+#import time
 
 
 '''
@@ -100,6 +101,7 @@ def GerarRelatorio(processos, valuecalcu, gerartabela, tipoprocesso, tipocriteri
         Format[1].text = str(processos[x-1][1])
         Format[2].text = str(processos[x-1][2])
         Format[3].text = str(processos[x-1][3])
+    docum.add_paragraph('')
     docum.add_picture('image.png', width=Inches(4))
     val = 0
     for x in y:
@@ -113,14 +115,31 @@ def GerarRelatorio(processos, valuecalcu, gerartabela, tipoprocesso, tipocriteri
         DiretorioSelecionado = filedialog.askdirectory()
         data = str(date.today())
         codigorandom = str(random.randrange(6000, 9999))
-        dirfinaldocx = DiretorioSelecionado+'/RelatorioPIPE-'+data+'-'+codigorandom+'.docx'
-        dirfinalpdf = DiretorioSelecionado+'/RelatorioPIPE-'+data+'-'+codigorandom+'.pdf'
-        docum.save(dirfinaldocx)
-        convert(r"{0}".format(dirfinaldocx), r"{0}".format(dirfinalpdf))
-        os.remove(dirfinaldocx)
-        salvou = True
-    except Exception:
+        if DiretorioSelecionado:
+            dirfinaldocx = DiretorioSelecionado+'\RelatorioPIPE-'+data+'-'+codigorandom+'.docx'
+            dirfinalpdf = DiretorioSelecionado+'\RelatorioPIPE-'+data+'-'+codigorandom+'.pdf'
+            docum.save(dirfinaldocx)
+            #docx2pdf.convert(r"{0}".format(dirfinaldocx), r"{0}".format(dirfinalpdf))
+            ##################################################################################
+            docx2pdf.convert(r"{0}".format(dirfinaldocx), r"{0}".format(dirfinalpdf))
+            '''
+            wdFormatPDF = 17
+            in_file=dirfinaldocx
+            out_file=dirfinalpdf
+            word=win32com.client.DispatchEx("Pdf.Application")
+            #word.Visible = True
+            doc=word.Documents.Open(in_file) # Abre o arquivo docx
+            doc.SaveAs(out_file, FileFormat=wdFormatPDF) # Faz a conversão em PDF
+            doc.Close() # Fecha o arquivo .docx
+            #word.Visible = False
+            word.Quit() # Fechar aplicação
+            '''
+            #################################################################################
+            os.remove(dirfinaldocx)
+            salvou = True
+    except Exception as error:
         salvou = False
+        print(error)
     os.remove('image.png')
     ps.close()
     return salvou
@@ -186,6 +205,7 @@ def GerarRelatorioSQL(processos, valuecalcu, gerartabela, tipoprocesso, tipocrit
         Format[1].text = str(processos[x-1][1])
         Format[2].text = str(processos[x-1][2])
         Format[3].text = str(processos[x-1][3])
+    docum.add_paragraph('', style="H2")
     docum.add_picture('image.png', width=Inches(4))
     val = 0
     for x in y:
@@ -199,7 +219,7 @@ def GerarRelatorioSQL(processos, valuecalcu, gerartabela, tipoprocesso, tipocrit
         dirfinaldocx = DiretorioSelecionado+'\RelatorioPIPESQL.docx'
         dirfinalpdf = DiretorioSelecionado+'\RelatorioPIPESQL.pdf'
         docum.save(dirfinaldocx)
-        convert(r"{0}".format(dirfinaldocx), r"{0}".format(dirfinalpdf))
+        docx2pdf.convert(r"{0}".format(dirfinaldocx), r"{0}".format(dirfinalpdf))
         os.remove(dirfinaldocx)
         salvou = True
     except Exception:

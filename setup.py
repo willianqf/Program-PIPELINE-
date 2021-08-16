@@ -1,19 +1,20 @@
-import sys
-from cx_Freeze import setup, Executable
+import os
+import win32com.client
+import subprocess
+#Replace excel=comtype.client.blablabla to
 
-# Dependencies are automatically detected, but it might need fine tuning.
-build_exe_options = {"packages": ["os"], "includes": ["PyQt5"]}
-
-# GUI applications require a different base on Windows (the default is for
-# a console application).
-base = None
-if sys.platform == "win32":
-    base = "Win32GUI"
-
-setup(
-    name="PIPE Installer",
-    version="1.0.0",
-    description="Pipe Generator Beta Teste Version",
-    options={"build_exe": build_exe_options},
-    executables=[Executable("info.py", base=base)]
-)
+'''
+wdFormatPDF = 17
+in_file=os.getcwd()+"\RelatorioPIPE-2021-08-16-6800.docx"
+out_file=os.getcwd()+"\RelatorioPIPE-2021-08-16-6800.pdf"
+word=win32com.client.DispatchEx("Word.Application")
+#word.Visible = True
+doc=word.Documents.Open(in_file) # Abre o arquivo docx
+doc.SaveAs(out_file, FileFormat=wdFormatPDF) # Faz a conversão em PDF
+doc.Close() # Fecha o arquivo .docx
+#word.Visible = False
+word.Quit() # Fechar aplicação
+'''
+#os.chdir(os.getcwd()+"\\RelatorioPIPE-2021-08-16-9597.pdf")
+#os.system(os.getcwd()+"\\RelatorioPIPE-2021-08-16-9597.pdf")
+#os.startfile(os.getcwd()+"\\RelatorioPIPE-2021-08-16-9520.docx")

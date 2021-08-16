@@ -1,16 +1,26 @@
 import random
+##### PIP INSTALL PYQT5 ############# <- Interface Gráfica
 from PyQt5 import uic, QtWidgets, QtCore
 from PyQt5.QtWidgets import QMessageBox
+###########################################################
 import devs 
+##### PIP INSTALL PYODBC ############ <- Conexão SQL Server
 import pyodbc
+###########################################################
 import GerarDocumento
+##### BIBLIOTECA PARA SALVAR DIRETÓRIO ##### <- salvar = tk() / salvar.withdraw() / DiretorioSelecionado = filedialog.askdirectory()
 from tkinter import filedialog
 from tkinter import *
+import os
 
 
 ConnectServer: bool = False
 NomeServer: str
 NomeBanco: str
+
+
+####### GERA OS OBJETOS DA INTERFACE DE SELEÇÃO DE ESCALONAMENTO #################
+###### TAMBÉM GERA OS MÉTODOS QUE SERÃO UTILIZADO POR CADA INTERFACE ##########
 
 # int(Forms2.TempoExecucao_1.text()), int(Forms2.OrdemChegada_1.text()), int(Forms2.Prioridade_1.text())
 ####################################### 2 PROCESSOS ##############################################
@@ -838,6 +848,7 @@ def GerarSQL7():
     else:
         QMessageBox.about(Processos7, "Sem Conexão", "Você precisa estar conectado para salvar os dados no banco de dados!")
 ################################### CARREGAR PROCESSOS #########################################
+### CARREGA A QUANTIDADE DE PROCESSOS DISPONIVEL E LIMPA OS CAMPOS DIGITADOS ANTERIORMENTE ####
 def carregarprocessos():
     valor = int(SelectProcess.process.currentText())
     SelectProcess.close()
@@ -876,12 +887,12 @@ def abrirprocessos(valor):
         Processos7.show()
 ############################## CONNECTAR SQL ########################################################
 
-def conexaobanco(nomeserver: str, nomebanco: str):
+def conexaobanco(nomeserver: str, nomebanco: str): # CONEXÃO COM O BANCO -> (cursor de conexão)
     #conexao = 'Driver={SQL Server Native Client 11.0};Server='+server+';Database='+database+';UID='+username+';PWD='+ password
     conexao = "Driver={SQL Server Native Client 11.0};Server="+nomeserver+";Database="+nomebanco+";Trusted_Connection=yes;"
     return pyodbc.connect(conexao)
 
-def buttonverif():
+def buttonverif(): # VERIFICA SE FOI DIGITADO ALGO NO CAMPO LOGIN
     if len(SQLlogin.SQLname.text()) > 8 and SQLlogin.SelectAut.currentText() == 'SQL Windows':
         SQLlogin.Connect.setEnabled(True)
     else:
@@ -890,21 +901,29 @@ def buttonverif():
         else:
             SQLlogin.Connect.setEnabled(False)
 
-def sqlserver():
+def sqlserver(): # HABILITA OS OBJETOS DE LOGIN e PASSWORD CASO O CAMPO DE SQL SERVER SEJA FALSO
     if SQLlogin.SelectAut.currentText() == 'SQL Server':
         SQLlogin.label_name.setEnabled(True)
         SQLlogin.label_senha.setEnabled(True)
         SQLlogin.SQLLogin_Name.setEnabled(True)
         SQLlogin.SQLLogin_Senha.setEnabled(True)
+        SQLlogin.ShowSenha.setEnabled(True)
     else:
         SQLlogin.label_name.setEnabled(False)
         SQLlogin.label_senha.setEnabled(False)
         SQLlogin.SQLLogin_Name.setEnabled(False)
         SQLlogin.SQLLogin_Senha.setEnabled(False)
+        SQLlogin.ShowSenha.setEnabled(False)
         SQLlogin.SQLLogin_Name.setText("")
         SQLlogin.SQLLogin_Senha.setText("")
 
-def ConnectarServidor():
+def mostrarsenha():
+    if SQLlogin.SQLLogin_Senha.echoMode() == 2:
+        SQLlogin.SQLLogin_Senha.setEchoMode(QtWidgets.QLineEdit.Normal)
+    else:
+        SQLlogin.SQLLogin_Senha.setEchoMode(QtWidgets.QLineEdit.Password)
+
+def ConnectarServidor(): # FUNÇÃO QUE PASSA AS INFORMAÇÕES AS VARIÁVEIS GLOBAIS!
     if SQLlogin.SelectAut.currentText() == 'SQL Windows':
             msq = QMessageBox()
             msq.setWindowTitle("Aviso de Conexão") #Define o titulo
@@ -918,6 +937,8 @@ def ConnectarServidor():
                     global NomeServer
                     global NomeBanco
                     global ConnectServer
+                    ### EXECUTA O CURSOR PARA TESTAR SE A CONEXÃO É REALIZADA
+                    ### CASO NÃO, RETORNA ERRO DE CONEXÃO E AS VARIÁVEIS NÃO SÃO PASSADAS
                     con = conexaobanco(SQLlogin.SQLname.text(), 'PIPESQL')
                     cursor = con.cursor()
                     cursor.close()
@@ -1009,6 +1030,7 @@ def deletar(valor):
     msq.setStandardButtons(QMessageBox.Yes|QMessageBox.Cancel) #Criar opções de click na mensagem
     resposta = msq.exec_()
     if resposta == QMessageBox.Yes:
+        ### DELETA DADOS DO BANCO ### <- USA-SE PADRÃO COD_Pipe
         conexao = conexaobanco(NomeServer, NomeBanco)
         cursor = conexao.cursor()
         cursor.execute("DELETE FROM BancoPipe WHERE COD_Pipe = '{0}'".format(valor))
@@ -1019,9 +1041,11 @@ def deletar(valor):
 def download(valor):
     global NomeBanco
     global NomeServer
+    ### PEGA O DIRETORIO QUE O USUÁRIO QUER SALVAR NO COMPUTADOR
     Diretorio = Tk()
     Diretorio.withdraw()
     DiretorioSelecionado = filedialog.askdirectory()
+    ############################################################
     print(DiretorioSelecionado)
     conexao = conexaobanco(NomeServer, NomeBanco)
     cursor = conexao.cursor()
@@ -1029,6 +1053,7 @@ def download(valor):
     val = cursor.fetchone()
     if val:
         for x in val:
+            ### SALVA O ARQUIVO EM FORMATO .PDF NO DIRETORIO SELECIONADO
             doguinho = open(DiretorioSelecionado+'\PIPE-Code-'+valor+'.pdf', 'wb')
             doguinho.write(x)
             doguinho.close()
@@ -1044,6 +1069,7 @@ def ListarDados():
     SQLview.tabela.setColumnCount(3)
     for x in range(0, len(val)):
         for y in range(1):
+            #### GERA UM TABLEWIDGET COM TODAS AS INFORMAÇÕES DO BANCO #########
             codigo = str(val[x][y])
             botaoDel = QtWidgets.QPushButton('Deletar')
             botaoDel.setStyleSheet('QPushButton {background-color:#A60100; font:bold; font-size:10px}')
@@ -1053,6 +1079,8 @@ def ListarDados():
             #botaoDel.clicked.connect(lambda: deletar('{0}'.format(SQLview.tabela.item(x, y).text())))
             #botaoDel.clicked.connect(lambda: deletar('{0}'.format(SQLview.tabela.item(x, y).text())))
             #botaoDel.clicked.connect(lambda who=str(codigo+""): deletar(who))
+            ###### GERA TODOS OS BOTÕES DO BANCO DE CADA LINHA ##############
+            ##### SÃO CRIADA AS FUNÇÕES PASSANDO O PARAMETRO O COD_Pipe ########
             botaoDel.clicked.connect (lambda state, x = codigo: deletar(x))
             botaoDow.clicked.connect (lambda state, x = codigo: download(x))
             SQLview.tabela.setItem(x, y, QtWidgets.QTableWidgetItem(codigo))
@@ -1110,15 +1138,16 @@ def InfoBanco():
 #####################################################################################################
 if __name__ == '__main__':
     Aplicativo = QtWidgets.QApplication([]) #Usar via .ui
-    SQLlogin = uic.loadUi("SQL-Login.ui") #Selecionar arquivo .ui
+    SQLlogin = uic.loadUi(os.getcwd()+"\\uic\\SQL-Login.ui") #Selecionar arquivo .ui
     SQLlogin.SQLname.textChanged.connect(buttonverif)
     SQLlogin.SelectAut.activated.connect(buttonverif)
     SQLlogin.SelectAut.activated.connect(sqlserver)
     SQLlogin.SQLLogin_Senha.textChanged.connect(buttonverif)
     SQLlogin.SQLLogin_Name.textChanged.connect(buttonverif)
     SQLlogin.Connect.clicked.connect(ConnectarServidor)
+    SQLlogin.ShowSenha.clicked.connect(mostrarsenha)
     #################### 2 PROCESSOS ##########################################
-    Processos2 = uic.loadUi("Processos2.ui")
+    Processos2 = uic.loadUi(os.getcwd()+"\\uic\\Processos2.ui")
     Processos2.GerarTabela.clicked.connect(GerarTabela2)
     Processos2.GerarRandom.triggered.connect(GerarNum2)
     Processos2.TipoEscala.activated.connect(GerarCrit2)
@@ -1126,21 +1155,21 @@ if __name__ == '__main__':
     Processos2.GerarRelatorio.clicked.connect(GerarRel2)
     Processos2.SalvarSQL.triggered.connect(GerarSQL2)
     #################### 3 PROCESSOS ##########################################
-    Processos3 = uic.loadUi("Processos3.ui")
+    Processos3 = uic.loadUi(os.getcwd()+"\\uic\\Processos3.ui")
     Processos3.GerarTabela.clicked.connect(GerarTabela3)
     Processos3.GerarRandom.triggered.connect(GerarNum3)
     Processos3.TipoEscala.activated.connect(GerarCrit3)
     Processos3.GerarRelatorio.clicked.connect(GerarRel3)
     Processos3.SalvarSQL.triggered.connect(GerarSQL3)
     #################### 4 PROCESSOS ##########################################
-    Processos4 = uic.loadUi("Processos4.ui")
+    Processos4 = uic.loadUi(os.getcwd()+"\\uic\\Processos4.ui")
     Processos4.GerarTabela.clicked.connect(GerarTabela4)
     Processos4.GerarRandom.triggered.connect(GerarNum4)
     Processos4.TipoEscala.activated.connect(GerarCrit4)
     Processos4.GerarRelatorio.clicked.connect(GerarRel4)
     Processos4.SalvarSQL.triggered.connect(GerarSQL4)
     #################### 5 PROCESSOS ##########################################
-    Processos5 = uic.loadUi("Processos5.ui")
+    Processos5 = uic.loadUi(os.getcwd()+"\\uic\\Processos5.ui")
     Processos5.GerarTabela.clicked.connect(GerarTabela5)
     Processos5.GerarRandom.triggered.connect(GerarNum5)
     Processos5.TipoEscala.activated.connect(GerarCrit5)
@@ -1148,7 +1177,7 @@ if __name__ == '__main__':
     Processos5.GerarRelatorio.clicked.connect(GerarRel5)
     Processos5.SalvarSQL.triggered.connect(GerarSQL5)
     #################### 6 PROCESSOS ##########################################
-    Processos6 = uic.loadUi("Processos6.ui")
+    Processos6 = uic.loadUi(os.getcwd()+"\\uic\\Processos6.ui")
     Processos6.GerarTabela.clicked.connect(GerarTabela6)
     Processos6.GerarRandom.triggered.connect(GerarNum6)
     Processos6.TipoEscala.activated.connect(GerarCrit6)
@@ -1156,7 +1185,7 @@ if __name__ == '__main__':
     Processos6.GerarRelatorio.clicked.connect(GerarRel6)
     Processos6.SalvarSQL.triggered.connect(GerarSQL6)
     #################### 7 PROCESSOS ##########################################
-    Processos7 = uic.loadUi("Processos7.ui")
+    Processos7 = uic.loadUi(os.getcwd()+"\\uic\\Processos7.ui")
     Processos7.GerarTabela.clicked.connect(GerarTabela7)
     Processos7.GerarRandom.triggered.connect(GerarNum7)
     Processos7.TipoEscala.activated.connect(GerarCrit7)
@@ -1164,19 +1193,20 @@ if __name__ == '__main__':
     Processos7.GerarRelatorio.clicked.connect(GerarRel7)
     Processos7.SalvarSQL.triggered.connect(GerarSQL7)
     ################### Seleção Processos #####################################
-    SelectProcess = uic.loadUi("ProcessosSelect.ui")
+    SelectProcess = uic.loadUi(os.getcwd()+"\\uic\\ProcessosSelect.ui")
     SelectProcess.LoadProcess.clicked.connect(carregarprocessos)
     ################### ACESSAR SQL ###########################################
-    SQLAccess = uic.loadUi("SQLAccess.ui")
-    SQLview = uic.loadUi("SQLview.ui")
-    SQLcodigo = uic.loadUi("SQLcodigo.ui")
+    SQLAccess = uic.loadUi(os.getcwd()+"\\uic\\SQLAccess.ui")
+    SQLview = uic.loadUi(os.getcwd()+"\\uic\\SQLview.ui")
+    SQLcodigo = uic.loadUi(os.getcwd()+"\\uic\\SQLcodigo.ui")
     SQLcodigo.Pesquisar.clicked.connect(Pesquisar)
     SQLAccess.ListarDados.clicked.connect(ListarDados)
     SQLAccess.AcessarCodigo.clicked.connect(AcessarCodigo)
     SQLAccess.DesconectarBanco.triggered.connect(DesconectarSQL)
     SQLAccess.InfoBanco.triggered.connect(InfoBanco)
     ####################    Main    ###########################################
-    Main = uic.loadUi("Main.ui")
+    arquivomain = os.getcwd()+"\\uic\\Main.ui"
+    Main = uic.loadUi(arquivomain)
     Main.AbrirProcesso.clicked.connect(abrirselect)
     Main.ConectarSQL.clicked.connect(abrirsql)
     Main.CarregarPIPE.clicked.connect(CarregarPIPE)

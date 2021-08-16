@@ -1,16 +1,16 @@
 from matplotlib.collections import LineCollection
 import matplotlib.pyplot as ps
-import io
+#import io
 from docx import Document
 #import pandas as pd
 import numpy as np
-import datetime
+#import datetime
 
 
 
 #processos = [('P1', 15, 1, 4),('P2',20, 2, 3),('P3', 20, 3, 1),('P4', 45, 4, 2)]
 #processos = [('P1', 7, 1, 2),('P2', 12, 2, 3),('P3', 40, 3, 4),('P4', 25, 4, 2),('P5', 36, 5, 1),('P6', 20, 6, 3)]
-processos = [('P1', 15, 1, 3),('P2',30, 2, 1),('P3', 5, 3, 4),('P4', 10, 4, 2)]
+#processos = [('P1', 15, 1, 3),('P2',30, 2, 1),('P3', 5, 3, 4),('P4', 10, 4, 2)]
 #ORDEM DE CHEGADA
 def calcularFIFO(valor): #Recebe list ('Nome Processo', 'Tempo de execução', 'Ordem de chegada', 'Prioridade')
     tempoEspera = [] #Pega a list de tempo de espera por processo

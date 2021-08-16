@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SQLview</class>
+ <widget class="QMainWindow" name="SQLview">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>599</width>
+    <height>368</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>364</width>
+    <height>215</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>599</width>
+    <height>599</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>SQL Access - PIPE</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>PipesTransparent.png</normaloff>PipesTransparent.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(230, 254, 255);
+gridline-color: rgb(255, 255, 255);
+selection-background-color: rgb(193, 255, 179);
+selection-color: rgb(0, 0, 0);
+border-bottom-color: rgb(255, 255, 255);</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTableWidget" name="tabela">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>581</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(238, 255, 243);</string>
+    </property>
+    <column>
+     <property name="text">
+      <string>Código do Arquivo</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Deletar</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Baixar Arquivo</string>
+     </property>
+    </column>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>599</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="SalvarSQL">
+   <property name="text">
+    <string>Salvar no SQL</string>
+   </property>
+  </action>
+  <action name="actionAbrir_PDF">
+   <property name="text">
+    <string>Abrir PDF</string>
+   </property>
+  </action>
+  <action name="InfoBanco">
+   <property name="text">
+    <string>Informações do Banco</string>
+   </property>
+  </action>
+  <action name="DesconectarBanco">
+   <property name="text">
+    <string>Desconectar Banco</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

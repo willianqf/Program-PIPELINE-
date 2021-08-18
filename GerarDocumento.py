@@ -42,6 +42,7 @@ def conexaobanco(nomeserver: str, nomebanco: str):
     return pyodbc.connect(conexao)
 
 def GerarRelatorio(processos, valuecalcu, gerartabela, tipoprocesso, tipocriterio) -> bool:
+    ps.close()
     """[summary]
 
     Args:
@@ -145,6 +146,7 @@ def GerarRelatorio(processos, valuecalcu, gerartabela, tipoprocesso, tipocriteri
     return salvou
 
 def GerarRelatorioSQL(processos, valuecalcu, gerartabela, tipoprocesso, tipocriterio, processo = None) -> bool:
+    ps.close()
     """[summary]
 
     Args:

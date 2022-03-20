@@ -124,7 +124,6 @@ def test(valor):
     #ps.savefig('SalveArquivo.png') salvar arquivo
 
 def CriarTabela(processos, inicio, fim):
-    ps.close()
     # VARIAVEIS DE CONSTRUÇÃO DO GRÁFICO
     y = processos # PROCESSOS DA TABELA Y
     c = []  # TIPO USADO (quantidade de processos)

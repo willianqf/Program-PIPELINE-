@@ -1154,8 +1154,6 @@ if __name__ == '__main__':
     Processos2.LimparCampos.triggered.connect(LimparCampos2)
     Processos2.GerarRelatorio.clicked.connect(GerarRel2)
     Processos2.SalvarSQL.triggered.connect(GerarSQL2)
-    Processos2.TipoEscala.setToolTip("FIFO - A prioridade a ser seguida será a ordem de chegada. Os processos de ordem de chegada \ncom menor valor serão calculados inicialmente do menor para o maior.\n\nSJF - A prioridade a ser seguida será o menor tempo de execução. Todos os processos vão ser organizado\ncom o menor tempo de execução considerando o menor para o maior. \n\nPor Prioridade - A prioridade a ser seguida será a prioridade de execução. Serão considerado \na prioridade de menor indíce para o maior.")
-    Processos2.TipoDesempate.setToolTip("Selecione qual o críterio de desempate caso haja empate no critério acima.\n\nEm caso de empate, o programa recalculará a nova ordem de critério.")
     #################### 3 PROCESSOS ##########################################
     Processos3 = uic.loadUi(os.getcwd()+"\\uic\\Processos3.ui")
     Processos3.GerarTabela.clicked.connect(GerarTabela3)
@@ -1163,8 +1161,6 @@ if __name__ == '__main__':
     Processos3.TipoEscala.activated.connect(GerarCrit3)
     Processos3.GerarRelatorio.clicked.connect(GerarRel3)
     Processos3.SalvarSQL.triggered.connect(GerarSQL3)
-    Processos3.TipoEscala.setToolTip("FIFO - A prioridade a ser seguida será a ordem de chegada. Os processos de ordem de chegada \ncom menor valor serão calculados inicialmente do menor para o maior.\n\nSJF - A prioridade a ser seguida será o menor tempo de execução. Todos os processos vão ser organizado\ncom o menor tempo de execução considerando o menor para o maior. \n\nPor Prioridade - A prioridade a ser seguida será a prioridade de execução. Serão considerado \na prioridade de menor indíce para o maior.")
-    Processos3.TipoDesempate.setToolTip("Selecione qual o críterio de desempate caso haja empate no critério acima.\n\nEm caso de empate, o programa recalculará a nova ordem de critério.")
     #################### 4 PROCESSOS ##########################################
     Processos4 = uic.loadUi(os.getcwd()+"\\uic\\Processos4.ui")
     Processos4.GerarTabela.clicked.connect(GerarTabela4)
@@ -1172,8 +1168,6 @@ if __name__ == '__main__':
     Processos4.TipoEscala.activated.connect(GerarCrit4)
     Processos4.GerarRelatorio.clicked.connect(GerarRel4)
     Processos4.SalvarSQL.triggered.connect(GerarSQL4)
-    Processos4.TipoEscala.setToolTip("FIFO - A prioridade a ser seguida será a ordem de chegada. Os processos de ordem de chegada \ncom menor valor serão calculados inicialmente do menor para o maior.\n\nSJF - A prioridade a ser seguida será o menor tempo de execução. Todos os processos vão ser organizado\ncom o menor tempo de execução considerando o menor para o maior. \n\nPor Prioridade - A prioridade a ser seguida será a prioridade de execução. Serão considerado \na prioridade de menor indíce para o maior.")
-    Processos4.TipoDesempate.setToolTip("Selecione qual o críterio de desempate caso haja empate no critério acima.\n\nEm caso de empate, o programa recalculará a nova ordem de critério.")
     #################### 5 PROCESSOS ##########################################
     Processos5 = uic.loadUi(os.getcwd()+"\\uic\\Processos5.ui")
     Processos5.GerarTabela.clicked.connect(GerarTabela5)
@@ -1182,8 +1176,6 @@ if __name__ == '__main__':
     Processos5.LimparCampos.triggered.connect(LimparCampos5)
     Processos5.GerarRelatorio.clicked.connect(GerarRel5)
     Processos5.SalvarSQL.triggered.connect(GerarSQL5)
-    Processos5.TipoEscala.setToolTip("FIFO - A prioridade a ser seguida será a ordem de chegada. Os processos de ordem de chegada \ncom menor valor serão calculados inicialmente do menor para o maior.\n\nSJF - A prioridade a ser seguida será o menor tempo de execução. Todos os processos vão ser organizado\ncom o menor tempo de execução considerando o menor para o maior. \n\nPor Prioridade - A prioridade a ser seguida será a prioridade de execução. Serão considerado \na prioridade de menor indíce para o maior.")
-    Processos5.TipoDesempate.setToolTip("Selecione qual o críterio de desempate caso haja empate no critério acima.\n\nEm caso de empate, o programa recalculará a nova ordem de critério.")
     #################### 6 PROCESSOS ##########################################
     Processos6 = uic.loadUi(os.getcwd()+"\\uic\\Processos6.ui")
     Processos6.GerarTabela.clicked.connect(GerarTabela6)
@@ -1192,8 +1184,6 @@ if __name__ == '__main__':
     Processos6.LimparCampos.triggered.connect(LimparCampos6)
     Processos6.GerarRelatorio.clicked.connect(GerarRel6)
     Processos6.SalvarSQL.triggered.connect(GerarSQL6)
-    Processos6.TipoEscala.setToolTip("FIFO - A prioridade a ser seguida será a ordem de chegada. Os processos de ordem de chegada \ncom menor valor serão calculados inicialmente do menor para o maior.\n\nSJF - A prioridade a ser seguida será o menor tempo de execução. Todos os processos vão ser organizado\ncom o menor tempo de execução considerando o menor para o maior. \n\nPor Prioridade - A prioridade a ser seguida será a prioridade de execução. Serão considerado \na prioridade de menor indíce para o maior.")
-    Processos6.TipoDesempate.setToolTip("Selecione qual o críterio de desempate caso haja empate no critério acima.\n\nEm caso de empate, o programa recalculará a nova ordem de critério.")
     #################### 7 PROCESSOS ##########################################
     Processos7 = uic.loadUi(os.getcwd()+"\\uic\\Processos7.ui")
     Processos7.GerarTabela.clicked.connect(GerarTabela7)
@@ -1202,8 +1192,6 @@ if __name__ == '__main__':
     Processos7.LimparCampos.triggered.connect(LimparCampos7)
     Processos7.GerarRelatorio.clicked.connect(GerarRel7)
     Processos7.SalvarSQL.triggered.connect(GerarSQL7)
-    Processos7.TipoEscala.setToolTip("FIFO - A prioridade a ser seguida será a ordem de chegada. Os processos de ordem de chegada \ncom menor valor serão calculados inicialmente do menor para o maior.\n\nSJF - A prioridade a ser seguida será o menor tempo de execução. Todos os processos vão ser organizado\ncom o menor tempo de execução considerando o menor para o maior. \n\nPor Prioridade - A prioridade a ser seguida será a prioridade de execução. Serão considerado \na prioridade de menor indíce para o maior.")
-    Processos7.TipoDesempate.setToolTip("Selecione qual o críterio de desempate caso haja empate no critério acima.\n\nEm caso de empate, o programa recalculará a nova ordem de critério.")
     ################### Seleção Processos #####################################
     SelectProcess = uic.loadUi(os.getcwd()+"\\uic\\ProcessosSelect.ui")
     SelectProcess.LoadProcess.clicked.connect(carregarprocessos)
